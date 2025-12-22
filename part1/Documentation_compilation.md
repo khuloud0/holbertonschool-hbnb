@@ -17,4 +17,4 @@ Manages data storage and retrieval.
 
 Communication between layers is handled using the Facade Pattern, ensuring separation of concerns and maintainability
 
-https://raw.githubusercontent.com/khuloud0/holbertonschool-hbnb/b8870fe87eaf765898f9db0560fb47bcacf97e55/part1/1.%20Detailed%20Class%20Diagram%20for%20Business%20Logic%20Layer.svg
+![High Level Package Diagram](High_Level_Package_Diagram.svg)
