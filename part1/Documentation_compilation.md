@@ -109,6 +109,25 @@ The flow includes:
 
 ---
 
+### Review Submission
+
+This sequence diagram illustrates the process of submitting a review for a place.
+It demonstrates how the system validates the review, stores it in the database,
+and returns a success response to the user.
+
+The interaction flow is as follows:
+1. The user submits a review through the API.
+2. The API forwards the request to the Business Logic layer.
+3. The Business Logic layer validates the review data.
+4. The validated review is saved in the database.
+5. The database confirms that the review has been saved.
+6. The Business Logic layer returns a confirmation to the API.
+7. The API sends a success response back to the user.
+
+![Review Submission](Sequence_Diagram_Review_Submission.svg)
+
+---
+
 ### Fetching a List of Places
 
 This sequence diagram explains how the system retrieves a list of available places.
