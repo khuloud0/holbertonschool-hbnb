@@ -31,4 +31,4 @@ class PersistenceLayer {
 PresentationLayer --> BusinessLogicLayer : Facade Pattern
 BusinessLogicLayer --> PersistenceLayer : Data Access
 
-![High Level Package Diagram](high_level_Package_Diagram..svg)
+part1/high_level_package_diagram..svg
