@@ -1,20 +1,34 @@
-1. Introduction
+# HBNB Technical Documentation
 
-This document provides a technical overview of the HBnB application design.
-It consolidates the system architecture, business logic structure, and API interaction flows before implementation.
+## Introduction
+This document compiles all UML diagrams created for the HBNB project.
+It provides an overview of the system architecture, business logic,
+and API interaction flows.
 
-The goal of this documentation is to clearly define how different components of the system interact and to serve as a reference for future development stages.
+---
 
-2. High-Level Architecture
+## High-Level Architecture
+This section presents the high-level package diagram of the application.
 
-The HBnB application follows a three-layer architecture:
- • Presentation Layer (API)
-Handles user requests and responses.
- • Business Logic Layer
-Contains the core application rules and domain logic.
- • Persistence Layer (Database)
-Manages data storage and retrieval.
+![High Level Package Diagram](High_Level_Package_Diagram.svg)
 
-Communication between layers is handled using the Facade Pattern, ensuring separation of concerns and maintainability
+---
 
-part1/high_level_package_diagram..svg
+## Business Logic Layer
+This section describes the detailed class diagram for the business logic layer.
+
+![Detailed Class Diagram](Detailed_Class_Diagram_for_Business_Logic_Layer.svg)
+
+---
+
+## API Interaction Flow
+This section shows the sequence diagrams for selected API calls.
+
+### User Registration
+![User Registration Sequence](Sequence_Diagram_User_Registration.svg)
+
+### Place Creation
+![Place Creation Sequence](Sequence_Diagram_Place_Creation.svg)
+
+### Fetch Places List
+![Fetch Places List Sequence](Sequence_Diagram_Fetch_Places_List.svg)
