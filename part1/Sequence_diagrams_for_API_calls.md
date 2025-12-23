@@ -9,13 +9,15 @@ This sequence diagram describes the process of user registration.
 It shows how a user submits registration data through the API,
 how the business logic validates the data, and how the user information
 is stored in the database.
+
 <img src="Sequence_Diagram_User_Registration.svg" width="600">
 
 ## Place Creation
 This diagram illustrates how a user creates a new place listing.
 The request is sent to the API, validated by the business logic,
 and then saved in the database before returning a success response.
-![Place Creation](Sequence_Diagram_Place_Creation.svg)
+
+<img src="Sequence_Diagram_Place_Creation.svg" width="600">
 
 ## Review Submission
 This sequence diagram represents the process of submitting a review for a place.
