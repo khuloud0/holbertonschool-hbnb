@@ -26,7 +26,7 @@ divided into the following main layers:
 This separation of concerns improves maintainability, scalability, and clarity
 of the overall system design.
 
-<img src="high_level_package_diagram..svg" width="200">
+<img src="high_level_package_diagram..svg" width="150">
 
 ---
 
