@@ -122,8 +122,7 @@ Amenities can be shared across multiple places.
 The following diagram visually represents the entities, their attributes, methods,
 and relationships within the Business Logic Layer.
 
-![Detailed Class Diagram](Detailed_Class_Diagram_for_Business_Logic_Layer.svg)
-
+<img src="Detailed_Class_Diagram_for_Business_Logic_Layer.svg" width="300" alt="Detailed Class Diagram for Business Logic Layer">
 ---
 
 ## Conclusion
