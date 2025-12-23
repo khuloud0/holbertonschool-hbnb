@@ -91,7 +91,7 @@ The flow includes:
 4. Storing the user information in the database.
 5. Returning a confirmation response to the user.
 
-<img src="Sequence_Diagram_User_Registration.svg" width="300">
+<img src="Sequence_Diagram_User_Registration.svg" width="400">
 
 ---
 
