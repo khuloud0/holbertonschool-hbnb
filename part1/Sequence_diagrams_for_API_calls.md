@@ -32,4 +32,6 @@ It shows the validation of the review and its storage in the database.
 This diagram explains how a user requests a list of places.
 The business logic processes the request, retrieves the data from the database,
 and returns the list of places to the user.
-![Fetching Places](Sequence_Diagram_Fetch_Places_List.svg)
+
+
+<img src="Sequence_Diagram_Fetch_Places_List.svg" width="600">
