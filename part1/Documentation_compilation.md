@@ -91,7 +91,7 @@ The flow includes:
 4. Storing the user information in the database.
 5. Returning a confirmation response to the user.
 
-<img src="Sequence_Diagram_User_Registration.svg" width="500">
+<img src="Sequence_Diagram_User_Registration.svg" width="600">
 
 ---
 
@@ -105,7 +105,7 @@ The flow includes:
 3. Persisting the place data in the database.
 4. Returning a success response to the user.
 
-<img src="Sequence_Diagram_Place_Creation.svg" width="150">
+<img src="Sequence_Diagram_Place_Creation.svg" width="600">
 
 ---
 
@@ -124,7 +124,7 @@ The interaction flow is as follows:
 6. The Business Logic layer returns a confirmation to the API.
 7. The API sends a success response back to the user.
 
-<img src="Sequence_Diagram_Review_Submission.svg" width="150">
+<img src="Sequence_Diagram_Review_Submission.svg" width="600">
 
 ---
 
@@ -138,7 +138,7 @@ The flow includes:
 3. The Business Logic layer fetching the data from the database.
 4. Returning the list of places to the user.
 
-<img src="Sequence_Diagram_Fetch_Places_List.svg" width="150">
+<img src="Sequence_Diagram_Fetch_Places_List.svg" width="600">
 
 ---
 
