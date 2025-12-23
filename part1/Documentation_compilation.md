@@ -61,7 +61,7 @@ foundation of the application’s domain model.
 This class diagram ensures that relationships and responsibilities between
 entities are clearly defined before implementation.
 
-![Detailed Class Diagram](Detailed_Class_Diagram_for_Business_Logic_Layer.svg)
+<img src="Detailed_Class_Diagram_for_Business_Logic_Layer.svg" width="600" alt="Detailed Class Diagram for Business Logic Layer">
 
 ---
 
