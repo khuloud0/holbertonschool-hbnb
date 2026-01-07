@@ -1,25 +1,44 @@
-def get_all_users(self):
-    """Get all users"""
-    return self.user_repo.find_all()
+#!/usr/bin/python3
 
-def update_user(self, user_id, update_data):
-    """Update user data"""
-    user = self.user_repo.find_by_id(user_id)
-    if not user:
-        return None
-    
-    # Check if new email is not already used
-    if 'email' in update_data and update_data['email'] != user.email:
-        existing_user = self.user_repo.find_by_email(update_data['email'])
-        if existing_user:
+from app.persistence.repository import InMemoryRepository
+from app.models.user import User
+
+
+class HBnBFacade:
+    def __init__(self):
+        self.user_repo = InMemoryRepository()
+
+    # ========================
+    # Users
+    # ========================
+
+    def create_user(self, user_data):
+        """Create and store a new user."""
+        user = User(**user_data)
+        self.user_repo.add(user)
+        return user
+
+    def get_user(self, user_id):
+        """Retrieve a user by ID."""
+        return self.user_repo.get(user_id)
+
+    def get_user_by_email(self, email):
+        """Retrieve a user by email."""
+        return self.user_repo.get_by_attribute('email', email)
+
+    def get_all_users(self):
+        """Retrieve all users."""
+        return self.user_repo.get_all()
+
+    def update_user(self, user_id, user_data):
+        """Update user details if the user exists."""
+        user = self.user_repo.get(user_id)
+        if not user:
             return None
-    
-    # Update allowed fields
-    allowed_fields = ['email', 'first_name', 'last_name']
-    for field in allowed_fields:
-        if field in update_data:
-            setattr(user, field, update_data[field])
-    
-    # Save the updated user
-    self.user_repo.save(user)
-    return user
+
+        for key, value in user_data.items():
+            if hasattr(user, key):
+                setattr(user, key, value)
+
+        self.user_repo.update(user_id, user_data)
+        return user
