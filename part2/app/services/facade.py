@@ -141,4 +141,5 @@ class HBnBFacade:
         
         self.review_repo.update(review_id, review_data)
         return review
+        facade = HBnBFacade()
     # Reviews
