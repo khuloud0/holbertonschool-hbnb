@@ -21,22 +21,22 @@ The API allows managing users, places, amenities, and reviews using in-memory da
 ---
 
 ## Project Structure 📁
-part2/
-├── app/
-│   ├── api/
-│   │   └── v1/
-│   │       ├── users.py
-│   │       ├── places.py
-│   │       ├── reviews.py
-│   │       └── amenities.py
-│   ├── models/
-│   ├── services/
-│   │   └── facade.py
-│   └── persistence/
-│       └── repository.py
-├── run.py
-├── requirements.txt
-└── README.md
+
+- part2/
+- app/
+- api/v1/
+  - users.py
+  - places.py
+  - reviews.py
+  - amenities.py
+- models/
+- services/
+  - facade.py
+- persistence/
+  - repository.py
+- run.py
+- requirements.txt
+- README.md
 ---
 
 
