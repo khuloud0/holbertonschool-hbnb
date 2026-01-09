@@ -131,8 +131,9 @@ This project was manually tested using curl to ensure:
 
 ## Notes
 
-	All endpoints were tested manually using curl
-	Swagger documentation was used to verify request and response formats
-	In-memory repository was used for data persistence during development and testing
+- All endpoints were tested manually using curl
+- Swagger documentation was used to verify request and response formats
+- In-memory repository was used for data persistence during development and testing
+
 
   
