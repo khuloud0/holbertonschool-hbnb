@@ -62,10 +62,10 @@ cd holbertonschool-hbnb/part2
 pip install -r requirements.txt
 ```
 
-Usage
+
 ## Usage 🚀
 
-Run the Flask server:
+1. Run the Flask server:
 
 ```bash
 python3 run.py
