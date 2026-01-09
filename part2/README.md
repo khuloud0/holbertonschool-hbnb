@@ -20,23 +20,19 @@ The API allows managing users, places, amenities, and reviews using in-memory da
 
 ---
 
-## Project Structure 📁
-
-- part2/
-- app/
-- api/v1/
-  - users.py
-  - places.py
-  - reviews.py
-  - amenities.py
-- models/
-- services/
-  - facade.py
-- persistence/
-  - repository.py
-- run.py
-- requirements.txt
-- README.md
+📌 Structure Overview
+	•	api/v1/
+Contains REST API endpoints for all resources (Users, Places, Reviews, Amenities)
+	•	models/
+Defines the data models and shared base model used across the application
+	•	services/
+Handles the application business logic using the Facade pattern
+	•	persistence/
+Manages data storage using an in-memory repository implementation
+	•	run.py
+Entry point for running the Flask application
+	•	config.py
+Application configuration and environment settings
 ---
 
 
