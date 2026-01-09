@@ -19,25 +19,25 @@ The API allows managing users, places, amenities, and reviews using in-memory da
 - Swagger documentation via Flask-RESTX
 
 ---
+### 📌 Structure Overview
 
-📌 Structure Overview
-	api/v1/
-Contains REST API endpoints for all resources (Users, Places, Reviews, Amenities)
+- **api/v1/**  
+  Contains REST API endpoints for all resources (Users, Places, Reviews, Amenities)
 
-	models/
-Defines the data models and the shared base model used across the application
+- **models/**  
+  Defines the data models and the shared base model used across the application
 
-	services/
-Handles the application business logic using the Facade pattern
+- **services/**  
+  Handles the application business logic using the Facade pattern
 
-	persistence/
-Manages data storage using an in-memory repository implementation
+- **persistence/**  
+  Manages data storage using an in-memory repository implementation
 
-	run.py
-Entry point for running the Flask application
+- **run.py**  
+  Entry point for running the Flask application
 
-	config.py
-Application configuration and environment settings
+- **config.py**  
+  Application configuration and environment settings
 
 ---
 
