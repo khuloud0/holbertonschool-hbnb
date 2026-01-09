@@ -70,12 +70,13 @@ pip install -r requirements.txt
 ```bash
 python3 run.py
 ```
-2. API base URL
+2. The API will be available at:
 
 ```bash
-[python3 run.py](http://127.0.0.1:5000)
+http://127.0.0.1:5000
 ```
-3. Example API Endpoints
+
+Example API Endpoints 🔗
 
 🔹 List users
 ```bash
@@ -85,9 +86,22 @@ GET /api/v1/users/
 ```bash
 POST /api/v1/users/
 ```
+🔹 List place
+```bash
+GET /api/v1/Place/
+```
+🔹 List reviews
+```bash
+GET /api/v1/reviews/
+```
+🔹 List amenities
+```bash
+GET /api/v1/amenities/
+```
 
 ## API Testing 🧪
 
+Creat a User
 ```bash
 curl -X POST http://127.0.0.1:5000/api/v1/users/ \
 -H "Content-Type: application/json" \
@@ -96,5 +110,13 @@ curl -X POST http://127.0.0.1:5000/api/v1/users/ \
   "last_name": "User",
   "email": "test@test.com",
   "password": "1234"
+}'
+```
+Expected response (201 Created )
+```bash
+"id":<generated_id>",
+"first_name": "Test",
+"last_name": "User",
+"email": "test@test.com"
 }'
 ```
