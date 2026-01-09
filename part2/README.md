@@ -70,9 +70,21 @@ pip install -r requirements.txt
 ```bash
 python3 run.py
 ```
-API Test (curl)
-
 2. API base URL
+
+```bash
+[python3 run.py](http://127.0.0.1:5000)
+```
+3. Example API Endpoints
+
+🔹 List users
+```bash
+GET /api/v1/users/
+```
+🔹 Create a user
+```bash
+POST /api/v1/users/
+```
 
 ## API Testing 🧪
 
