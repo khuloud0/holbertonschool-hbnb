@@ -120,3 +120,19 @@ Expected response (201 Created )
 "email": "test@test.com"
 }'
 ```
+## Testing & Validation
+
+This project was manually tested using curl to ensure:
+
+	Required fields validation (400 Bad Request)
+	Non-existing resources return (404 Not Found)
+	Successful creation returns (201 Created)
+	Correct JSON structure in all responses
+
+## Notes
+
+	All endpoints were tested manually using curl
+	Swagger documentation was used to verify request and response formats
+	In-memory repository was used for data persistence during development and testing
+
+  
