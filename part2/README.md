@@ -71,6 +71,9 @@ pip install -r requirements.txt
 python3 run.py
 ```
 API Test (curl)
+
+2. API base URL
+
 ## API Testing 🧪
 
 ```bash
