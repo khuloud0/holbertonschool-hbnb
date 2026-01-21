@@ -7,8 +7,9 @@ from app.api.v1.places import api as places_ns
 from app.api.v1.reviews import api as reviews_ns
 
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
+    app.config.from_object(config_class)
 
     api = Api(
         app,
