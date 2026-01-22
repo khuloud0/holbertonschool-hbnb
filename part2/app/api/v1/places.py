@@ -1,94 +1,83 @@
 #!/usr/bin/python3
-from flask_restx import Namespace, Resource, fields
-from app.services.facade import HBnBFacade
+"""Place model"""
 
-api = Namespace('places', description='Place operations')
-facade = HBnBFacade()
-
-# ========================
-# Models
-# ========================
-
-place_model = api.model('Place', {
-    'title': fields.String(required=True, description='Title of the place'),
-    'description': fields.String(description='Description'),
-    'price': fields.Float(required=True, description='Price per night'),
-    'latitude': fields.Float(required=True, description='Latitude'),
-    'longitude': fields.Float(required=True, description='Longitude'),
-    'owner_id': fields.String(required=True, description='Owner ID'),
-    'amenities': fields.List(
-        fields.String,
-        description='List of amenity IDs'
-    )
-})
-
-place_update_model = api.model('PlaceUpdate', {
-    'title': fields.String(description='Title of the place'),
-    'description': fields.String(description='Description'),
-    'price': fields.Float(description='Price per night'),
-    'latitude': fields.Float(description='Latitude'),
-    'longitude': fields.Float(description='Longitude'),
-    'owner_id': fields.String(description='Owner ID'),
-    'amenities': fields.List(
-        fields.String,
-        description='List of amenity IDs'
-    )
-})
-
-# ========================
-# /places
-# ========================
-
-@api.route('/')
-class PlaceList(Resource):
-
-    @api.expect(place_model, validate=True)
-    @api.response(201, 'Place successfully created')
-    @api.response(400, 'Invalid input data')
-    def post(self):
-        """Create a new place"""
-        data = api.payload
-
-        try:
-            place = facade.create_place(data)
-            return place.to_dict(), 201
-        except (TypeError, ValueError) as e:
-            return {'error': str(e)}, 400
-
-    @api.response(200, 'List of places retrieved successfully')
-    def get(self):
-        """Retrieve all places"""
-        places = facade.get_all_places()
-        return {
-            'places': [place.to_dict() for place in places]
-        }, 200
+from app.models.base_model import BaseModel
+from app.models.user import User
+from app.models.review import Review
+from app.models.amenity import Amenity
 
 
-# ========================
-# /places/<place_id>
-# ========================
+class Place(BaseModel):
+    """Place class"""
 
-@api.route('/<place_id>')
-class PlaceResource(Resource):
+    def __init__(
+        self,
+        title: str,
+        owner: User,
+        description: str = "",
+        price: float = 0.0,
+        latitude: float = 0.0,
+        longitude: float = 0.0
+    ):
+        super().__init__()
 
-    @api.response(200, 'Place retrieved successfully')
-    @api.response(404, 'Place not found')
-    def get(self, place_id):
-        """Retrieve place by ID"""
-        place = facade.get_place(place_id)
-        if not place:
-            return {'error': 'Place not found'}, 404
-        return place.to_dict(), 200
+        # ---------- validations ----------
+        self._validate_title(title)
+        self._validate_price(price)
+        self._validate_latitude(latitude)
+        self._validate_longitude(longitude)
+        self._validate_owner(owner)
 
-    @api.expect(place_update_model, validate=True)
-    @api.response(200, 'Place updated successfully')
-    @api.response(404, 'Place not found')
-    def put(self, place_id):
-        """Update place information"""
-        data = api.payload
+        # ---------- assign values ----------
+        self.title = title
+        self.description = description
+        self.price = price
+        self.latitude = latitude
+        self.longitude = longitude
+        self.owner = owner
 
-        place = facade.update_place(place_id, data)
-        if not place:
-            return {'error': 'Place not found'}, 404
+        # ---------- relationships ----------
+        self.reviews = []
+        self.amenities = []
 
-        return place.to_dict(), 200
+    # ---------- Validation Helpers ----------
+
+    def _validate_title(self, title):
+        if not title or not isinstance(title, str):
+            raise ValueError("title is required")
+        if len(title) > 100:
+            raise ValueError("title must be at most 100 characters")
+
+    def _validate_price(self, price):
+        if not isinstance(price, (int, float)) or price <= 0:
+            raise ValueError("price must be a positive number")
+
+    def _validate_latitude(self, latitude):
+        if not isinstance(latitude, (int, float)):
+            raise ValueError("latitude must be a number")
+        if latitude < -90 or latitude > 90:
+            raise ValueError("latitude must be between -90 and 90")
+
+    def _validate_longitude(self, longitude):
+        if not isinstance(longitude, (int, float)):
+            raise ValueError("longitude must be a number")
+        if longitude < -180 or longitude > 180:
+            raise ValueError("longitude must be between -180 and 180")
+
+    def _validate_owner(self, owner):
+        if not isinstance(owner, User):
+            raise ValueError("owner must be a User instance")
+
+    # ---------- Relationship Methods ----------
+
+    def add_review(self, review):
+        """Attach a review to this place"""
+        if not isinstance(review, Review):
+            raise ValueError("review must be a Review instance")
+        self.reviews.append(review)
+
+    def add_amenity(self, amenity):
+        """Attach an amenity to this place"""
+        if not isinstance(amenity, Amenity):
+            raise ValueError("amenity must be an Amenity instance")
+        self.amenities.append(amenity)
