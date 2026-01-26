@@ -3,7 +3,6 @@ from flask_restx import Namespace, Resource, fields, marshal_with
 from app.services.facade import facade
 
 api = Namespace('amenities', description='Amenity operations')
-facade = HBnBFacade()
 
 # Define the amenity model for input validation and documentation
 amenity_model = api.model('Amenity', {
