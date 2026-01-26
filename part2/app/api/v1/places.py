@@ -5,7 +5,6 @@ from flask_restx import Namespace, Resource, fields
 from app.services.facade import facade
 
 api = Namespace('places', description='Place operations')
-facade = HBnBFacade()
 
 # ===== Swagger Models =====
 
