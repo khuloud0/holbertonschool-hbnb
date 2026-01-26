@@ -4,6 +4,7 @@
 from app.models.base_model import BaseModel
 from app.models.user import User
 from app.models.place import Place
+from datetime import datetime
 
 
 class Review(BaseModel):
@@ -32,6 +33,19 @@ class Review(BaseModel):
 
         # link review to place
         place.add_review(self)
+
+    # ---------- Update ----------
+
+    def update(self, **kwargs):
+        if "text" in kwargs:
+            self._validate_text(kwargs["text"])
+            self.text = kwargs["text"]
+
+        if "rating" in kwargs:
+            self._validate_rating(kwargs["rating"])
+            self.rating = kwargs["rating"]
+
+        self.updated_at = datetime.utcnow()
 
     # ---------- Validation Helpers ----------
 
