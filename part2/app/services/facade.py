@@ -8,7 +8,7 @@ from app.models.review import Review
 from app.models.amenity import Amenity
 
 
-class HBNBFacade:
+class HBnBFacade:
     """Facade class handling business logic"""
 
     def __init__(self):
@@ -155,4 +155,4 @@ class HBNBFacade:
 
 
 # Facade instance
-facade = HBNBFacade()
+facade = HBnBFacade()
