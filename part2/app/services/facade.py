@@ -17,25 +17,25 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
-# ================= USERS =================
+    # ================= USERS =================
 
-def create_user(self, user_data):
-    user = User(**user_data)
-    self.user_repo.add(user)
-    return user
+    def create_user(self, user_data):
+        user = User(**user_data)
+        self.user_repo.add(user)
+        return user
 
-def get_user(self, user_id):
-    return self.user_repo.get(user_id)
+    def get_user(self, user_id):
+        return self.user_repo.get(user_id)
 
-def get_all_users(self):
-    return self.user_repo.get_all()
+    def get_all_users(self):
+        return self.user_repo.get_all()
 
-def get_user_by_email(self, email):
-    users = self.user_repo.get_all()
-    for user in users:
-        if user.email == email:
-            return user
-    return None
+    def get_user_by_email(self, email):
+        users = self.user_repo.get_all()
+        for user in users:
+            if user.email == email:
+                return user
+        return None
 
     # ================= PLACES =================
 
@@ -119,9 +119,7 @@ def get_user_by_email(self, email):
         review = Review(**review_data)
         self.review_repo.add(review)
 
-        # link review to place
         place.add_review(review)
-
         return review
 
     def get_review(self, review_id):
