@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Facade layer for HBNB application"""
+"""Facade layer for HBnB application"""
 
 from app.persistence.repository import InMemoryRepository
 from app.models.user import User
@@ -17,18 +17,25 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
-    # ================= USERS =================
+# ================= USERS =================
 
-    def create_user(self, user_data):
-        user = User(**user_data)
-        self.user_repo.add(user)
-        return user
+def create_user(self, user_data):
+    user = User(**user_data)
+    self.user_repo.add(user)
+    return user
 
-    def get_user(self, user_id):
-        return self.user_repo.get(user_id)
+def get_user(self, user_id):
+    return self.user_repo.get(user_id)
 
-    def get_all_users(self):
-        return self.user_repo.get_all()
+def get_all_users(self):
+    return self.user_repo.get_all()
+
+def get_user_by_email(self, email):
+    users = self.user_repo.get_all()
+    for user in users:
+        if user.email == email:
+            return user
+    return None
 
     # ================= PLACES =================
 
