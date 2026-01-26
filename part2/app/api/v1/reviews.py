@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask_restx import Namespace, Resource, fields
-from app.services.facade import HBnBFacade
+from app.services.facade import facade
 
 api = Namespace('reviews', description='Review operations')
 facade = HBnBFacade()
