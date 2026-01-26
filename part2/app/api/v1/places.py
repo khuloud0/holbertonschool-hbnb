@@ -1,83 +1,58 @@
 #!/usr/bin/python3
-"""Place model"""
+"""Places API endpoints"""
 
-from app.models.base_model import BaseModel
-from app.models.user import User
-from app.models.review import Review
-from app.models.amenity import Amenity
+from flask_restx import Namespace, Resource, fields
+from app.services.facade import HBNBFacade
+
+api = Namespace('places', description='Place operations')
+facade = HBNBFacade()
+
+# ===== Swagger Models =====
+
+place_model = api.model('Place', {
+    'title': fields.String(required=True),
+    'description': fields.String(),
+    'price': fields.Float(required=True),
+    'latitude': fields.Float(required=True),
+    'longitude': fields.Float(required=True),
+    'owner_id': fields.String(required=True),
+})
+
+place_update_model = api.model('PlaceUpdate', {
+    'title': fields.String(),
+    'description': fields.String(),
+    'price': fields.Float(),
+    'latitude': fields.Float(),
+    'longitude': fields.Float(),
+})
+
+# ===== Routes =====
+
+@api.route('/')
+class PlaceList(Resource):
+
+    @api.expect(place_model, validate=True)
+    def post(self):
+        place = facade.create_place(api.payload)
+        return place.to_dict(), 201
+
+    def get(self):
+        places = facade.get_all_places()
+        return {'places': [p.to_dict() for p in places]}, 200
 
 
-class Place(BaseModel):
-    """Place class"""
+@api.route('/<place_id>')
+class PlaceResource(Resource):
 
-    def __init__(
-        self,
-        title: str,
-        owner: User,
-        description: str = "",
-        price: float = 0.0,
-        latitude: float = 0.0,
-        longitude: float = 0.0
-    ):
-        super().__init__()
+    def get(self, place_id):
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+        return place.to_dict(), 200
 
-        # ---------- validations ----------
-        self._validate_title(title)
-        self._validate_price(price)
-        self._validate_latitude(latitude)
-        self._validate_longitude(longitude)
-        self._validate_owner(owner)
-
-        # ---------- assign values ----------
-        self.title = title
-        self.description = description
-        self.price = price
-        self.latitude = latitude
-        self.longitude = longitude
-        self.owner = owner
-
-        # ---------- relationships ----------
-        self.reviews = []
-        self.amenities = []
-
-    # ---------- Validation Helpers ----------
-
-    def _validate_title(self, title):
-        if not title or not isinstance(title, str):
-            raise ValueError("title is required")
-        if len(title) > 100:
-            raise ValueError("title must be at most 100 characters")
-
-    def _validate_price(self, price):
-        if not isinstance(price, (int, float)) or price <= 0:
-            raise ValueError("price must be a positive number")
-
-    def _validate_latitude(self, latitude):
-        if not isinstance(latitude, (int, float)):
-            raise ValueError("latitude must be a number")
-        if latitude < -90 or latitude > 90:
-            raise ValueError("latitude must be between -90 and 90")
-
-    def _validate_longitude(self, longitude):
-        if not isinstance(longitude, (int, float)):
-            raise ValueError("longitude must be a number")
-        if longitude < -180 or longitude > 180:
-            raise ValueError("longitude must be between -180 and 180")
-
-    def _validate_owner(self, owner):
-        if not isinstance(owner, User):
-            raise ValueError("owner must be a User instance")
-
-    # ---------- Relationship Methods ----------
-
-    def add_review(self, review):
-        """Attach a review to this place"""
-        if not isinstance(review, Review):
-            raise ValueError("review must be a Review instance")
-        self.reviews.append(review)
-
-    def add_amenity(self, amenity):
-        """Attach an amenity to this place"""
-        if not isinstance(amenity, Amenity):
-            raise ValueError("amenity must be an Amenity instance")
-        self.amenities.append(amenity)
+    @api.expect(place_update_model, validate=True)
+    def put(self, place_id):
+        place = facade.update_place(place_id, api.payload)
+        if not place:
+            return {'error': 'Place not found'}, 404
+        return place.to_dict(), 200
