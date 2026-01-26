@@ -2,10 +2,10 @@
 """Places API endpoints"""
 
 from flask_restx import Namespace, Resource, fields
-from app.services.facade import HBNBFacade
+from app.services.facade import HBnBFacade
 
 api = Namespace('places', description='Place operations')
-facade = HBNBFacade()
+facade = HBnBFacade()
 
 # ===== Swagger Models =====
 
