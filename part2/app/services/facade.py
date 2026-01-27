@@ -36,6 +36,19 @@ class HBnBFacade:
             if user.email == email:
                 return user
         return None
+        
+    def update_user(self, user_id, data):
+    user = self.get_user(user_id)
+    if not user:
+        return None
+
+    for key, value in data.items():
+        setattr(user, key, value)
+
+    user.updated_at = datetime.utcnow()
+    self.storage.save()
+
+    return user
 
     # ================= PLACES =================
 
