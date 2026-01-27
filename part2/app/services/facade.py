@@ -6,6 +6,7 @@ from app.models.user import User
 from app.models.place import Place
 from app.models.review import Review
 from app.models.amenity import Amenity
+from datetime import datetime
 
 
 class HBnBFacade:
@@ -36,6 +37,19 @@ class HBnBFacade:
             if user.email == email:
                 return user
         return None
+
+    def update_user(self, user_id, user_data):
+        user = self.user_repo.get(user_id)
+        if not user:
+            return None
+
+        for key in ["first_name", "last_name", "email", "password"]:
+            if key in user_data:
+                setattr(user, key, user_data[key])
+
+        user.updated_at = datetime.utcnow()
+        self.user_repo.update(user_id, user_data)
+        return user
 
     # ================= PLACES =================
 
