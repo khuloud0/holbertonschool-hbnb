@@ -57,3 +57,17 @@ class User(BaseModel):
         email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
         if not re.match(email_regex, email):
             raise ValueError("Invalid email format")
+
+    # ---------- Serialization ----------
+
+    def to_dict(self):
+        """Return dictionary representation of a User"""
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "is_admin": self.is_admin,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
