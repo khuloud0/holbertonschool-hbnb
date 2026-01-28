@@ -2,14 +2,14 @@
 """User model"""
 
 import re
-from flask_bcrypt import generate_password_hash
+from werkzeug.security import generate_password_hash
 from app.models.base_model import BaseModel
 
 
 class User(BaseModel):
     """User class"""
 
-    used_emails = set()  # simple in-memory uniqueness check
+    used_emails = set()  # in-memory uniqueness check
 
     def __init__(
         self,
@@ -35,8 +35,9 @@ class User(BaseModel):
         self.last_name = last_name
         self.is_admin = is_admin
 
+        # ---- password hashing ----
         self.password_hash = (
-            generate_password_hash(password).decode("utf-8")
+            generate_password_hash(password)
             if password else ""
         )
 
@@ -57,17 +58,3 @@ class User(BaseModel):
         email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
         if not re.match(email_regex, email):
             raise ValueError("Invalid email format")
-
-    # ---------- Serialization ----------
-
-    def to_dict(self):
-        """Return dictionary representation of a User"""
-        return {
-            "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email,
-            "is_admin": self.is_admin,
-            "created_at": self.created_at,
-            "updated_at": self.updated_at
-        }
