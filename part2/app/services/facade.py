@@ -85,49 +85,43 @@ class HBnBFacade:
         self.place_repo.update(place_id, place_data)
         return place
 
-      # ================== AMENITIES ==================
+    # ================= AMENITIES =================
 
-def create_amenity(self, amenity_data):
-    if "name" not in amenity_data:
-        raise ValueError("Amenity name is required")
-
-    if "description" not in amenity_data:
-        raise ValueError("Amenity description is required")
-
-    amenity = Amenity(
-        name=amenity_data["name"],
-        description=amenity_data["description"]
-    )
-
-    self.amenity_repo.add(amenity)
-    return amenity
-
-
-def get_amenity(self, amenity_id):
-    return self.amenity_repo.get(amenity_id)
-
-
-def get_all_amenities(self):
-    return self.amenity_repo.get_all()
-
-
-def update_amenity(self, amenity_id, amenity_data):
-    amenity = self.amenity_repo.get(amenity_id)
-    if not amenity:
-        return None
-
-    if "name" in amenity_data:
-        if not amenity_data["name"]:
+    def create_amenity(self, amenity_data):
+        if "name" not in amenity_data or not amenity_data["name"]:
             raise ValueError("Amenity name is required")
-        amenity.name = amenity_data["name"]
 
-    if "description" in amenity_data:
-        if not amenity_data["description"]:
+        if "description" not in amenity_data or not amenity_data["description"]:
             raise ValueError("Amenity description is required")
-        amenity.description = amenity_data["description"]
 
-    self.amenity_repo.update(amenity_id, amenity_data)
-    return amenity
+        amenity = Amenity(**amenity_data)
+        self.amenity_repo.add(amenity)
+        return amenity
+
+    def get_amenity(self, amenity_id):
+        return self.amenity_repo.get(amenity_id)
+
+    def get_all_amenities(self):
+        return self.amenity_repo.get_all()
+
+    def update_amenity(self, amenity_id, amenity_data):
+        amenity = self.amenity_repo.get(amenity_id)
+        if not amenity:
+            return None
+
+        if "name" in amenity_data:
+            if not amenity_data["name"]:
+                raise ValueError("Amenity name is required")
+            amenity.name = amenity_data["name"]
+
+        if "description" in amenity_data:
+            if not amenity_data["description"]:
+                raise ValueError("Amenity description is required")
+            amenity.description = amenity_data["description"]
+
+        amenity.updated_at = datetime.utcnow()
+        self.amenity_repo.update(amenity_id, amenity_data)
+        return amenity
 
     # ================= REVIEWS =================
 
