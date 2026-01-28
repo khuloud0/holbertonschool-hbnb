@@ -101,6 +101,16 @@ class HBnBFacade:
     def get_amenity(self, amenity_id):
         return self.amenity_repo.get(amenity_id)
 
+    def get_amenity_by_id(self, amenity_id):
+        return self.amenity_repo.get(amenity_id)
+
+    def get_amenity_by_name(self, name):
+        amenities = self.amenity_repo.get_all()
+        for amenity in amenities:
+            if amenity.name == name:
+                return amenity
+        return None
+
     def get_all_amenities(self):
         return self.amenity_repo.get_all()
 
