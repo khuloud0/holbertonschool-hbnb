@@ -85,31 +85,49 @@ class HBnBFacade:
         self.place_repo.update(place_id, place_data)
         return place
 
-    # ================= AMENITIES =================
+      # ================== AMENITIES ==================
 
-    def create_amenity(self, amenity_data):
-        amenity = Amenity(**amenity_data)
-        self.amenity_repo.add(amenity)
-        return amenity
+def create_amenity(self, amenity_data):
+    if "name" not in amenity_data:
+        raise ValueError("Amenity name is required")
 
-    def get_amenity(self, amenity_id):
-        return self.amenity_repo.get(amenity_id)
+    if "description" not in amenity_data:
+        raise ValueError("Amenity description is required")
 
-    def get_all_amenities(self):
-        return self.amenity_repo.get_all()
+    amenity = Amenity(
+        name=amenity_data["name"],
+        description=amenity_data["description"]
+    )
 
-    def update_amenity(self, amenity_id, amenity_data):
-        amenity = self.amenity_repo.get(amenity_id)
-        if not amenity:
-            return None
+    self.amenity_repo.add(amenity)
+    return amenity
 
-        if "name" in amenity_data:
-            if not amenity_data["name"]:
-                raise ValueError("Amenity name is required")
-            amenity.name = amenity_data["name"]
 
-        self.amenity_repo.update(amenity_id, amenity_data)
-        return amenity
+def get_amenity(self, amenity_id):
+    return self.amenity_repo.get(amenity_id)
+
+
+def get_all_amenities(self):
+    return self.amenity_repo.get_all()
+
+
+def update_amenity(self, amenity_id, amenity_data):
+    amenity = self.amenity_repo.get(amenity_id)
+    if not amenity:
+        return None
+
+    if "name" in amenity_data:
+        if not amenity_data["name"]:
+            raise ValueError("Amenity name is required")
+        amenity.name = amenity_data["name"]
+
+    if "description" in amenity_data:
+        if not amenity_data["description"]:
+            raise ValueError("Amenity description is required")
+        amenity.description = amenity_data["description"]
+
+    self.amenity_repo.update(amenity_id, amenity_data)
+    return amenity
 
     # ================= REVIEWS =================
 
