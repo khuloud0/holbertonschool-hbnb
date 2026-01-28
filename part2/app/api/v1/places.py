@@ -32,8 +32,11 @@ class PlaceList(Resource):
 
     @api.expect(place_model, validate=True)
     def post(self):
-        place = facade.create_place(api.payload)
-        return place.to_dict(), 201
+        try:
+            place = facade.create_place(api.payload)
+            return place.to_dict(), 201
+        except ValueError as e:
+            return {'error': str(e)}, 400
 
     def get(self):
         places = facade.get_all_places()
@@ -51,7 +54,10 @@ class PlaceResource(Resource):
 
     @api.expect(place_update_model, validate=True)
     def put(self, place_id):
-        place = facade.update_place(place_id, api.payload)
-        if not place:
-            return {'error': 'Place not found'}, 404
-        return place.to_dict(), 200
+        try:
+            place = facade.update_place(place_id, api.payload)
+            if not place:
+                return {'error': 'Place not found'}, 404
+            return place.to_dict(), 200
+        except ValueError as e:
+            return {'error': str(e)}, 400
