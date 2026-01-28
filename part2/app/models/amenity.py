@@ -27,7 +27,7 @@ class Amenity(BaseModel):
             raise ValueError("name must be at most 50 characters")
 
     def _validate_description(self, description: str):
-        if description and not isinstance(description, str):
-            raise ValueError("description must be a string")
-        if description and len(description) > 255:
+        if not description or not isinstance(description, str):
+            raise ValueError("description is required")
+        if len(description) > 255:
             raise ValueError("description must be at most 255 characters")
