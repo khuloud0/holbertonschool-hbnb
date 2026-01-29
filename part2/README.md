@@ -122,12 +122,36 @@ Expected response (201 Created )
 ```
 ## Testing & Validation
 
-This project was manually tested using curl to ensure:
+This project was manually tested using **Swagger UI** and **curl** to ensure correct API behavior and business logic validation.
 
-- Required fields validation (400 Bad Request)
-- Non-existing resources return (404 Not Found)
-- Successful creation returns (201 Created)
-- Correct JSON structure in all responses
+The following areas were tested and verified:
+
+### Resource Creation
+- Users can be created successfully (201 Created).
+- Places can be created with valid owner IDs.
+- Reviews can be created only when user and place exist.
+
+### Field Validation and Error Responses
+- Creating resources with missing required fields returns **400 Bad Request**.
+- Invalid JSON payloads in Swagger return clear validation errors.
+- Invalid foreign IDs (e.g., non-existing owner_id or user_id) return **404 Not Found**.
+
+### Serialization Verification
+- Place endpoints now return all expected fields (`title`, `description`, `price`, `latitude`, `longitude`, `owner_id`).
+- Review endpoints return full details: `text`, `rating`, `user_id`, `place_id` as well as base fields.
+- Fixes were implemented in the `to_dict()` methods of Place and Review to include all attributes.
+
+### Update and Delete Behavior
+- PUT endpoints update correct fields and respond with **200 OK**.
+- DELETE endpoints remove the resource and subsequent GET returns **404 Not Found**.
+- A bug in Review update arguments was resolved by standardizing `review.update(**review_data)`.
+
+### Edge Cases
+- Attempting to update or delete a non-existing review returns **404 Review not found**.
+- Rating values outside the range 1–5 return validation errors.
+- Objects created earlier cannot be updated after server restart due to in-memory repository reset (handled in testing order).
+
+All tests were performed manually and verified against the expected behavior defined in the project specifications.
 
 ## Notes
 
