@@ -90,28 +90,48 @@ It provides interactive documentation for all endpoints, including:
 - Reviews
 - Amenities
   
-Example API Endpoints 🔗
+  
+## Example API Endpoints 🔗
+Below are some example API endpoints that can be tested using curl or via Swagger UI.
 
-🔹 List users
+
+- List users
 ```bash
 GET /api/v1/users/
 ```
-🔹 Create a user
+- Create a user
 ```bash
 POST /api/v1/users/
 ```
-🔹 List place
+- List place
 ```bash
 GET /api/v1/Place/
 ```
-🔹 List reviews
+- Create a place
+```bash
+GET /api/v1/places/
+```
+- List reviews
 ```bash
 GET /api/v1/reviews/
 ```
-🔹 List amenities
+- Create a review
+```bash
+POST /api/v1/reviews/
+ ```bash
+ -  List amenities
 ```bash
 GET /api/v1/amenities/
-```
+```bash
+- Create an amenity
+```bash
+POST /api/v1/amenities/
+```bash
+## Swagger Documentation
+Interactive API documentation is available at:
+```bash
+http://127.0.0.1:5000/api/v1/
+```bash
 
 ## API Testing 🧪
 
