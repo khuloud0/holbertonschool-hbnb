@@ -54,7 +54,7 @@ cd holbertonschool-hbnb/part2
 ```bash
 pip install -r requirements.txt
 ```
-## 4. Run the Flask serve
+## 4. Run the Flask server
 ```bash
 flask run --host=0.0.0.0 --port=80
 ```
