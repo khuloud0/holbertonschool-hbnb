@@ -46,7 +46,7 @@ The API allows managing users, places, amenities, and reviews using in-memory da
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/khuloud0/holbertonschool-hbnb.git
-
+```bash
 
 
 Example API Endpoints 🔗
