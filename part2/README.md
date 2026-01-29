@@ -46,6 +46,14 @@ The API allows managing users, places, amenities, and reviews using in-memory da
 ```bash
 git clone https://github.com/khuloud0/holbertonschool-hbnb.git
 ```
+## 2.Navigate to the Part 2 project directory
+```bash
+cd holbertonschool-hbnb/part2
+```
+## 3. Install the required dependencies
+```bash
+pip install -r requirements.txt
+```
 
 
 Example API Endpoints 🔗
