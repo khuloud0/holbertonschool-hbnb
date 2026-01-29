@@ -121,6 +121,7 @@ Expected response (201 Created )
 }'
 ```
 ## Testing & Validation
+Several issues were discovered during testing, mainly related to serialization, update method signatures, and repository behavior, and were resolved iteratively.
 
 This project was manually tested using **Swagger UI** and **curl** to ensure correct API behavior and business logic validation.
 
@@ -149,7 +150,7 @@ The following areas were tested and verified:
 ### Edge Cases
 - Attempting to update or delete a non-existing review returns **404 Review not found**.
 - Rating values outside the range 1–5 return validation errors.
-- Objects created earlier cannot be updated after server restart due to in-memory repository reset (handled in testing order).
+- Due to the use of an in-memory repository, data is reset on server restart. All update and delete tests were therefore performed within the same runtime session..
 
 All tests were performed manually and verified against the expected behavior defined in the project specifications.
 
