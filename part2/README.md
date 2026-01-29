@@ -145,7 +145,9 @@ http://127.0.0.1:5000/api/v1/
 
 ## API Testing 🧪
 
-Creat a User
+**Creat a User**
+This example demonstrates how to create a new user using a POST request.
+
 ```bash
 curl -X POST http://127.0.0.1:5000/api/v1/users/ \
 -H "Content-Type: application/json" \
@@ -156,7 +158,8 @@ curl -X POST http://127.0.0.1:5000/api/v1/users/ \
   "password": "1234"
 }'
 ```
-Expected response (201 Created )
+**Expected Response (201 Created)**
+
 ```bash
 "id":<generated_id>",
 "first_name": "Test",
