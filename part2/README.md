@@ -59,7 +59,36 @@ pip install -r requirements.txt
 flask run --host=0.0.0.0 --port=80
 ```
 
-
+## Usage 🚀
+## 1. Run the Flask server
+From the part2 directory, run:
+```bash
+python3 run.py
+```
+Alternatively, you can run the server using Flask:
+```bash
+flask run --host=0.0.0.0 --port=80
+```
+## 2. Access the API
+Once the server is running, the API will be available at:
+```bash
+http://127.0.0.1:5000
+```
+or (if running on port 80):
+```bash
+http://localhost
+```
+## 3. API Documentation (Swagger)
+Swagger UI is available at:
+```bash
+http://127.0.0.1:5000/api/v1/
+```
+It provides interactive documentation for all endpoints, including:
+  •	Users
+	•	Places
+	•	Reviews
+	•	Amenities
+  
 Example API Endpoints 🔗
 
 🔹 List users
