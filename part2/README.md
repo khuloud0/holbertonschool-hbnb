@@ -48,19 +48,16 @@ The API allows managing users, places, amenities, and reviews using in-memory da
 
 ```bash
 git clone https://github.com/khuloud0/holbertonschool-hbnb.git
-```
 
-2. Navigate to the project directory:
-
-```bash
+2.	Navigate to the Part 2 project directory:
 cd holbertonschool-hbnb/part2
-```
 
-3. Install dependencies:
+3.	(Optional but recommended) Create and activate a virtual environment
+python3 -m venv venv
+source venv/bin/activate
 
-```bash
+4.	Install the required dependencies:
 pip install -r requirements.txt
-```
 
 
 ## Usage 🚀
