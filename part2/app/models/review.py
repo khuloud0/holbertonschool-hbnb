@@ -50,7 +50,15 @@ class Review(BaseModel):
 
     # ---------- Update ----------
 
-    def update(self, **kwargs):
+    def update(self, data=None, **kwargs):
+        """
+        Supports both:
+        - update({"text": "...", "rating": 5})  # called by repository
+        - update(text="...", rating=5)         # called manually
+        """
+        if isinstance(data, dict):
+            kwargs.update(data)
+
         if "text" in kwargs:
             self._validate_text(kwargs["text"])
             self.text = kwargs["text"]
