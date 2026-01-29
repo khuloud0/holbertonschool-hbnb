@@ -41,6 +41,7 @@ class Place(BaseModel):
     # ---------- Serialization ----------
 
     def to_dict(self):
+        print(">>> PLACE to_dict CALLED <<<")
         data = super().to_dict()
         data.update({
             "title": self.title,
