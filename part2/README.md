@@ -47,18 +47,7 @@ The API allows managing users, places, amenities, and reviews using in-memory da
 ```bash
 git clone https://github.com/khuloud0/holbertonschool-hbnb.git
 
-## Usage 🚀
 
-1. Run the Flask server:
-
-```bash
-python3 run.py
-```
-2. The API will be available at:
-
-```bash
-http://127.0.0.1:5000
-```
 
 Example API Endpoints 🔗
 
