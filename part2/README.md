@@ -104,35 +104,35 @@ Below are examples of the main API endpoints available in this project.
 These endpoints allow managing users, places, reviews, and amenities through standard HTTP methods.
 
 
-- List users
+- **List users**
 ```bash
 GET /api/v1/users/
 ```
-- Create a user
+- **Create a user**
 ```bash
 POST /api/v1/users/
 ```
-- List place
+- **List place**
 ```bash
 GET /api/v1/Place/
 ```
-- Create a place
+- **Create a place**
 ```bash
 GET /api/v1/places/
 ```
-- List reviews
+- **List reviews**
 ```bash
 GET /api/v1/reviews/
 ```
-- Create a review
+- **Create a review**
  ```bash
 POST /api/v1/reviews/
  ```
- -  List amenities
+ - **List amenities**
 ```bash
 GET /api/v1/amenities/
 ```
-- Create an amenity
+- **Create an amenity**
 ```bash
 POST /api/v1/amenities/
 ```
