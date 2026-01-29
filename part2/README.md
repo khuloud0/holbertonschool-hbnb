@@ -119,14 +119,17 @@ GET /api/v1/reviews/
 ```bash
 POST /api/v1/reviews/
  ```bash
+
  -  List amenities
 ```bash
 GET /api/v1/amenities/
 ```bash
+
 - Create an amenity
 ```bash
 POST /api/v1/amenities/
 ```bash
+
 ## Swagger Documentation
 Interactive API documentation is available at:
 ```bash
