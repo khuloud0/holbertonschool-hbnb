@@ -38,6 +38,20 @@ class Place(BaseModel):
         self.reviews = []
         self.amenities = []
 
+    # ---------- Serialization ----------
+
+    def to_dict(self):
+        data = super().to_dict()
+        data.update({
+            "title": self.title,
+            "description": self.description,
+            "price": self.price,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "owner_id": self.owner.id
+        })
+        return data
+
     # ---------- Validation Helpers ----------
 
     def _validate_title(self, title):
@@ -73,18 +87,3 @@ class Place(BaseModel):
 
     def add_amenity(self, amenity):
         self.amenities.append(amenity)
-
-    # ---------- Serialization ----------
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "title": self.title,
-            "description": self.description,
-            "price": self.price,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "owner_id": self.owner.id if self.owner else None,
-            "created_at": self.created_at.isoformat(),
-            "updated_at": self.updated_at.isoformat(),
-        }
