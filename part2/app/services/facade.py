@@ -171,9 +171,13 @@ class HBnBFacade:
         return place.reviews
 
     def update_review(self, review_id, review_data):
-        review = self.review_repo.get(review_id)
-        if not review:
-            return None
+    review = self.review_repo.get(review_id)
+    if not review:
+        return None
+
+    review.update(**review_data)
+    self.review_repo.update(review_id, review_data)
+    return review
 
         if "text" in review_data:
             review._validate_text(review_data["text"])
