@@ -116,25 +116,23 @@ GET /api/v1/places/
 GET /api/v1/reviews/
 ```
 - Create a review
-```bash
-POST /api/v1/reviews/
  ```bash
-
+POST /api/v1/reviews/
+ ```
  -  List amenities
 ```bash
 GET /api/v1/amenities/
-```bash
-
+```
 - Create an amenity
 ```bash
 POST /api/v1/amenities/
-```bash
+```
 
 ## Swagger Documentation
 Interactive API documentation is available at:
 ```bash
 http://127.0.0.1:5000/api/v1/
-```bash
+```
 
 ## API Testing 🧪
 
