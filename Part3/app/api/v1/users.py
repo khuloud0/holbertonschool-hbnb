@@ -37,7 +37,6 @@ class UserList(Resource):
         """Create a new user"""
         data = api.payload
 
-        # check duplicate email
         if facade.get_user_by_email(data['email']):
             return {'error': 'Email already registered'}, 400
 
@@ -51,9 +50,7 @@ class UserList(Resource):
     def get(self):
         """Retrieve all users"""
         users = facade.get_all_users()
-        return {
-            'users': [user.to_dict() for user in users]
-        }, 200
+        return {'users': [user.to_dict() for user in users]}, 200
 
 
 # ========================
@@ -80,13 +77,23 @@ class UserResource(Resource):
     def put(self, user_id):
         """Update user information"""
         current_user_id = get_jwt_identity()
+        current_user = facade.get_user(current_user_id)
 
-        if user_id != current_user_id:
-            return {'error': 'You can only update your own account'}, 403
+        if not current_user:
+            return {'error': 'Unauthorized'}, 403
 
         data = api.payload
-        data.pop('email', None)
-        data.pop('password', None)
+
+        # 👤 User عادي: يقدر يعدل نفسه فقط
+        if not current_user.is_admin:
+            if user_id != current_user_id:
+                return {'error': 'You can only update your own account'}, 403
+
+            # يمنع تغيير email و password
+            data.pop('email', None)
+            data.pop('password', None)
+
+        # 👑 Admin: مسموح له كل شيء
 
         user = facade.update_user(user_id, data)
         if not user:
