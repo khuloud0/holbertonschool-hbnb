@@ -41,11 +41,11 @@ class ReviewList(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
 
-       
+        # لا يسمح بتقييم مكانه
         if place.owner_id == current_user_id:
             return {'error': 'You cannot review your own place'}, 403
 
-       
+        # منع التقييم المكرر
         existing = facade.get_reviews_by_place(data['place_id'])
         for review in existing:
             if review.user_id == current_user_id:
@@ -86,14 +86,16 @@ class ReviewResource(Resource):
     @api.response(404, 'Review not found')
     @jwt_required()
     def put(self, review_id):
-        """Update a review (owner only)"""
+        """Update a review (owner or admin)"""
         review = facade.get_review(review_id)
         if not review:
             return {'error': 'Review not found'}, 404
 
         current_user_id = get_jwt_identity()
+        current_user = facade.get_user(current_user_id)
 
-        if review.user_id != current_user_id:
+        # ✅ admin bypass
+        if not current_user.is_admin and review.user_id != current_user_id:
             return {'error': 'You can only update your own reviews'}, 403
 
         try:
@@ -108,14 +110,16 @@ class ReviewResource(Resource):
     @api.response(404, 'Review not found')
     @jwt_required()
     def delete(self, review_id):
-        """Delete a review (owner only)"""
+        """Delete a review (owner or admin)"""
         review = facade.get_review(review_id)
         if not review:
             return {'error': 'Review not found'}, 404
 
         current_user_id = get_jwt_identity()
+        current_user = facade.get_user(current_user_id)
 
-        if review.user_id != current_user_id:
+        # ✅ admin bypass
+        if not current_user.is_admin and review.user_id != current_user_id:
             return {'error': 'You can only delete your own reviews'}, 403
 
         facade.delete_review(review_id)
