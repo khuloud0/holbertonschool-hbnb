@@ -70,15 +70,16 @@ class PlaceResource(Resource):
     @api.response(404, 'Place not found')
     @jwt_required()
     def put(self, place_id):
-        """Update a place (owner only)"""
+        """Update a place (owner or admin)"""
         place = facade.get_place(place_id)
         if not place:
             return {'error': 'Place not found'}, 404
 
         current_user_id = get_jwt_identity()
+        current_user = facade.get_user(current_user_id)
 
-        # التحقق من الملكية
-        if place.owner_id != current_user_id:
+        # ✅ admin bypass
+        if not current_user.is_admin and place.owner_id != current_user_id:
             return {'error': 'You can only modify your own places'}, 403
 
         try:
