@@ -1,17 +1,13 @@
-class Config:
-    """Base configuration class"""
-    DEBUG = False
-    TESTING = False
-    SECRET_KEY = "super-secret-key"
+from flask import Flask
+from flask_bcrypt import Bcrypt
+from config import DevelopmentConfig
 
+bcrypt = Bcrypt()
 
-class DevelopmentConfig(Config):
-    DEBUG = True
+def create_app(config_class=DevelopmentConfig):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
 
+    bcrypt.init_app(app)
 
-class TestingConfig(Config):
-    TESTING = True
-
-
-class ProductionConfig(Config):
-    DEBUG = False
+    return app
