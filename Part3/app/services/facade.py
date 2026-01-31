@@ -116,7 +116,6 @@ class HBnBFacade:
         if not place:
             raise ValueError("Place not found")
 
-        # نخلي user_id و place_id تنحفظ مباشرة
         review = Review(**review_data)
         return self.review_repo.add(review)
 
@@ -125,6 +124,13 @@ class HBnBFacade:
 
     def get_all_reviews(self):
         return self.review_repo.get_all()
+
+    def get_reviews_by_place(self, place_id):
+        place = self.place_repo.get(place_id)
+        if not place:
+            return None
+
+        return place.reviews
 
     def update_review(self, review_id, review_data):
         review = self.review_repo.get(review_id)
