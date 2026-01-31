@@ -2,32 +2,39 @@
 """User model"""
 
 import re
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.base_model import BaseModel
+from app.db import db
 
 
 class User(BaseModel):
-    """User class"""
+    """User SQLAlchemy model"""
 
-    used_emails = set()  # in-memory uniqueness check
+    __tablename__ = "users"
 
+    # ===== Columns =====
+    email = db.Column(db.String(128), nullable=False, unique=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    password_hash = db.Column(db.String(256), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False, nullable=False)
+
+    # ===== Init =====
     def __init__(
         self,
         email: str,
         first_name: str,
         last_name: str,
-        password: str = "",
-        is_admin: bool = False
+        password: str,
+        is_admin: bool = False,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
 
         # ---- validations ----
         self._validate_name(first_name, "first_name")
         self._validate_name(last_name, "last_name")
         self._validate_email(email)
-
-        if email in User.used_emails:
-            raise ValueError("Email already exists")
 
         # ---- assign values ----
         self.email = email
@@ -36,15 +43,14 @@ class User(BaseModel):
         self.is_admin = is_admin
 
         # ---- password hashing ----
-        self.password_hash = (
-            generate_password_hash(password)
-            if password else ""
-        )
+        self.password_hash = generate_password_hash(password)
 
-        User.used_emails.add(email)
+    # ===== Password helpers =====
+    def check_password(self, password: str) -> bool:
+        """Verify password"""
+        return check_password_hash(self.password_hash, password)
 
-    # ---------- Validation Helpers ----------
-
+    # ===== Validation Helpers =====
     def _validate_name(self, value: str, field: str):
         if not value or not isinstance(value, str):
             raise ValueError(f"{field} is required")
@@ -58,3 +64,15 @@ class User(BaseModel):
         email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
         if not re.match(email_regex, email):
             raise ValueError("Invalid email format")
+
+    # ===== Serialization =====
+    def to_dict(self):
+        """Dictionary representation (safe)"""
+        data = super().to_dict()
+        data.update({
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "is_admin": self.is_admin
+        })
+        return data
