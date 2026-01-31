@@ -16,7 +16,7 @@ class HBnBFacade:
     """Facade class handling business logic"""
 
     def __init__(self):
-        # ✅ SQLAlchemy repositories (Part 3)
+        # SQLAlchemy repositories (Part 3)
         self.user_repo = UserRepository()
         self.place_repo = SQLAlchemyRepository(Place)
         self.review_repo = SQLAlchemyRepository(Review)
@@ -55,12 +55,10 @@ class HBnBFacade:
     # ================= PLACES =================
 
     def create_place(self, place_data):
-        owner = self.user_repo.get(place_data.get("owner_id"))
+        owner_id = place_data.get("owner_id")
+        owner = self.user_repo.get(owner_id)
         if not owner:
             raise ValueError("Owner not found")
-
-        place_data["owner"] = owner
-        place_data.pop("owner_id")
 
         place = Place(**place_data)
         return self.place_repo.add(place)
@@ -149,5 +147,5 @@ class HBnBFacade:
         return review
 
 
-# ✅ Facade instance
+# Facade instance
 facade = HBnBFacade()
