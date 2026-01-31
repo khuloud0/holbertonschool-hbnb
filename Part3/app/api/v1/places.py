@@ -5,7 +5,12 @@ from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.facade import facade
 
-api = Namespace('places', description='Place operations')
+# ✅ إضافة security هنا فقط
+api = Namespace(
+    'places',
+    description='Place operations',
+    security='Bearer'
+)
 
 # ===== Swagger Models =====
 
@@ -78,7 +83,7 @@ class PlaceResource(Resource):
         current_user_id = get_jwt_identity()
         current_user = facade.get_user(current_user_id)
 
-        # ✅ admin bypass
+        # admin bypass
         if not current_user.is_admin and place.owner_id != current_user_id:
             return {'error': 'You can only modify your own places'}, 403
 
