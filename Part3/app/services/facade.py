@@ -1,36 +1,33 @@
 #!/usr/bin/python3
 """Facade layer for HBnB application"""
 
-from app.persistence.repository import InMemoryRepository
+from datetime import datetime
+
 from app.repositories.user_repository import UserRepository
+from app.repositories.sqlalchemy_repository import SQLAlchemyRepository
+
 from app.models.user import User
 from app.models.place import Place
 from app.models.review import Review
 from app.models.amenity import Amenity
-from datetime import datetime
 
 
 class HBnBFacade:
     """Facade class handling business logic"""
 
-    def __init__(self, use_db=False):
-        if use_db:
-            # ✅ SQLAlchemy User Repository
-            self.user_repo = UserRepository()
-
-            # ❌ باقي الكيانات لسه InMemory (حسب المطلوب)
-            self.place_repo = InMemoryRepository()
-            self.review_repo = InMemoryRepository()
-            self.amenity_repo = InMemoryRepository()
-        else:
-            self.user_repo = InMemoryRepository()
-            self.place_repo = InMemoryRepository()
-            self.review_repo = InMemoryRepository()
-            self.amenity_repo = InMemoryRepository()
+    def __init__(self):
+        # ✅ SQLAlchemy repositories (Part 3)
+        self.user_repo = UserRepository()
+        self.place_repo = SQLAlchemyRepository(Place)
+        self.review_repo = SQLAlchemyRepository(Review)
+        self.amenity_repo = SQLAlchemyRepository(Amenity)
 
     # ================= USERS =================
 
     def create_user(self, user_data):
+        if self.user_repo.get_by_email(user_data.get("email")):
+            raise ValueError("Email already exists")
+
         user = User(**user_data)
         return self.user_repo.add(user)
 
@@ -41,7 +38,6 @@ class HBnBFacade:
         return self.user_repo.get_all()
 
     def get_user_by_email(self, email):
-        # ✅ باستخدام UserRepository
         return self.user_repo.get_by_email(email)
 
     def update_user(self, user_id, user_data):
@@ -49,7 +45,7 @@ class HBnBFacade:
         if not user:
             return None
 
-        for key in ["first_name", "last_name", "email", "password"]:
+        for key in ["first_name", "last_name", "email"]:
             if key in user_data:
                 setattr(user, key, user_data[key])
 
@@ -59,9 +55,7 @@ class HBnBFacade:
     # ================= PLACES =================
 
     def create_place(self, place_data):
-        owner_id = place_data.get("owner_id")
-        owner = self.user_repo.get(owner_id)
-
+        owner = self.user_repo.get(place_data.get("owner_id"))
         if not owner:
             raise ValueError("Owner not found")
 
@@ -69,8 +63,7 @@ class HBnBFacade:
         place_data.pop("owner_id")
 
         place = Place(**place_data)
-        self.place_repo.add(place)
-        return place
+        return self.place_repo.add(place)
 
     def get_place(self, place_id):
         return self.place_repo.get(place_id)
@@ -87,21 +80,14 @@ class HBnBFacade:
             if key in place_data:
                 setattr(place, key, place_data[key])
 
-        self.place_repo.update(place_id, place_data)
-        return place
+        place.updated_at = datetime.utcnow()
+        return self.place_repo.update(place)
 
     # ================= AMENITIES =================
 
     def create_amenity(self, amenity_data):
-        if not amenity_data.get("name"):
-            raise ValueError("Amenity name is required")
-
-        if not amenity_data.get("description"):
-            raise ValueError("Amenity description is required")
-
         amenity = Amenity(**amenity_data)
-        self.amenity_repo.add(amenity)
-        return amenity
+        return self.amenity_repo.add(amenity)
 
     def get_amenity(self, amenity_id):
         return self.amenity_repo.get(amenity_id)
@@ -114,15 +100,12 @@ class HBnBFacade:
         if not amenity:
             return None
 
-        if "name" in amenity_data:
-            amenity.name = amenity_data["name"]
-
-        if "description" in amenity_data:
-            amenity.description = amenity_data["description"]
+        for key in ["name", "description"]:
+            if key in amenity_data:
+                setattr(amenity, key, amenity_data[key])
 
         amenity.updated_at = datetime.utcnow()
-        self.amenity_repo.update(amenity_id, amenity_data)
-        return amenity
+        return self.amenity_repo.update(amenity)
 
     # ================= REVIEWS =================
 
@@ -141,8 +124,7 @@ class HBnBFacade:
         review_data.pop("place_id")
 
         review = Review(**review_data)
-        self.review_repo.add(review)
-        return review
+        return self.review_repo.add(review)
 
     def get_review(self, review_id):
         return self.review_repo.get(review_id)
@@ -150,20 +132,13 @@ class HBnBFacade:
     def get_all_reviews(self):
         return self.review_repo.get_all()
 
-    def get_reviews_by_place(self, place_id):
-        place = self.place_repo.get(place_id)
-        if not place:
-            return None
-        return place.reviews
-
     def update_review(self, review_id, review_data):
         review = self.review_repo.get(review_id)
         if not review:
             return None
 
-        review.update(**review_data)
-        self.review_repo.update(review_id, review_data)
-        return review
+        review.update(review_data)
+        return self.review_repo.update(review)
 
     def delete_review(self, review_id):
         review = self.review_repo.get(review_id)
@@ -174,5 +149,5 @@ class HBnBFacade:
         return review
 
 
-# Facade instance
+# ✅ Facade instance
 facade = HBnBFacade()
