@@ -2,7 +2,7 @@
 """Facade layer for HBnB application"""
 
 from app.persistence.repository import InMemoryRepository
-from app.repositories.sqlalchemy_repository import SQLAlchemyRepository
+from app.repositories.user_repository import UserRepository
 from app.models.user import User
 from app.models.place import Place
 from app.models.review import Review
@@ -15,10 +15,13 @@ class HBnBFacade:
 
     def __init__(self, use_db=False):
         if use_db:
-            self.user_repo = SQLAlchemyRepository()
-            self.place_repo = SQLAlchemyRepository()
-            self.review_repo = SQLAlchemyRepository()
-            self.amenity_repo = SQLAlchemyRepository()
+            # ✅ SQLAlchemy User Repository
+            self.user_repo = UserRepository()
+
+            # ❌ باقي الكيانات لسه InMemory (حسب المطلوب)
+            self.place_repo = InMemoryRepository()
+            self.review_repo = InMemoryRepository()
+            self.amenity_repo = InMemoryRepository()
         else:
             self.user_repo = InMemoryRepository()
             self.place_repo = InMemoryRepository()
@@ -29,8 +32,7 @@ class HBnBFacade:
 
     def create_user(self, user_data):
         user = User(**user_data)
-        self.user_repo.add(user)
-        return user
+        return self.user_repo.add(user)
 
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
@@ -39,11 +41,8 @@ class HBnBFacade:
         return self.user_repo.get_all()
 
     def get_user_by_email(self, email):
-        users = self.user_repo.get_all()
-        for user in users:
-            if user.email == email:
-                return user
-        return None
+        # ✅ باستخدام UserRepository
+        return self.user_repo.get_by_email(email)
 
     def update_user(self, user_id, user_data):
         user = self.user_repo.get(user_id)
@@ -55,8 +54,7 @@ class HBnBFacade:
                 setattr(user, key, user_data[key])
 
         user.updated_at = datetime.utcnow()
-        self.user_repo.update(user_id, user_data)
-        return user
+        return self.user_repo.update(user)
 
     # ================= PLACES =================
 
@@ -95,10 +93,10 @@ class HBnBFacade:
     # ================= AMENITIES =================
 
     def create_amenity(self, amenity_data):
-        if "name" not in amenity_data or not amenity_data["name"]:
+        if not amenity_data.get("name"):
             raise ValueError("Amenity name is required")
 
-        if "description" not in amenity_data or not amenity_data["description"]:
+        if not amenity_data.get("description"):
             raise ValueError("Amenity description is required")
 
         amenity = Amenity(**amenity_data)
@@ -107,16 +105,6 @@ class HBnBFacade:
 
     def get_amenity(self, amenity_id):
         return self.amenity_repo.get(amenity_id)
-
-    def get_amenity_by_id(self, amenity_id):
-        return self.amenity_repo.get(amenity_id)
-
-    def get_amenity_by_name(self, name):
-        amenities = self.amenity_repo.get_all()
-        for amenity in amenities:
-            if amenity.name == name:
-                return amenity
-        return None
 
     def get_all_amenities(self):
         return self.amenity_repo.get_all()
@@ -127,13 +115,9 @@ class HBnBFacade:
             return None
 
         if "name" in amenity_data:
-            if not amenity_data["name"]:
-                raise ValueError("Amenity name is required")
             amenity.name = amenity_data["name"]
 
         if "description" in amenity_data:
-            if not amenity_data["description"]:
-                raise ValueError("Amenity description is required")
             amenity.description = amenity_data["description"]
 
         amenity.updated_at = datetime.utcnow()
@@ -143,14 +127,11 @@ class HBnBFacade:
     # ================= REVIEWS =================
 
     def create_review(self, review_data):
-        user_id = review_data.get("user_id")
-        place_id = review_data.get("place_id")
-
-        user = self.user_repo.get(user_id)
+        user = self.user_repo.get(review_data.get("user_id"))
         if not user:
             raise ValueError("User not found")
 
-        place = self.place_repo.get(place_id)
+        place = self.place_repo.get(review_data.get("place_id"))
         if not place:
             raise ValueError("Place not found")
 
@@ -193,5 +174,5 @@ class HBnBFacade:
         return review
 
 
-# Facade instance (default: InMemory)
+# Facade instance
 facade = HBnBFacade()
