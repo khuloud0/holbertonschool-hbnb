@@ -1,30 +1,40 @@
 #!/usr/bin/python3
 """
-SQLAlchemy Repository (placeholder for DB integration)
+SQLAlchemy Repository
 """
 
-class SQLAlchemyRepository:
-    """Repository using SQLAlchemy (to be fully implemented later)"""
+from app.db import db
 
-    def __init__(self, model=None):
+
+class SQLAlchemyRepository:
+    """Generic repository using SQLAlchemy"""
+
+    def __init__(self, model):
         self.model = model
 
     def add(self, obj):
         """Add object to database"""
-        raise NotImplementedError("SQLAlchemy integration not implemented yet")
+        db.session.add(obj)
+        db.session.commit()
+        return obj
 
     def get(self, obj_id):
         """Get object by ID"""
-        raise NotImplementedError("SQLAlchemy integration not implemented yet")
+        return self.model.query.get(obj_id)
 
     def get_all(self):
         """Get all objects"""
-        raise NotImplementedError("SQLAlchemy integration not implemented yet")
+        return self.model.query.all()
 
-    def update(self, obj_id, data):
+    def update(self, obj):
         """Update object"""
-        raise NotImplementedError("SQLAlchemy integration not implemented yet")
+        db.session.commit()
+        return obj
 
     def delete(self, obj_id):
         """Delete object"""
-        raise NotImplementedError("SQLAlchemy integration not implemented yet")
+        obj = self.get(obj_id)
+        if obj:
+            db.session.delete(obj)
+            db.session.commit()
+        return obj
