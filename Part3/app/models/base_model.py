@@ -9,7 +9,7 @@ from app.db import db
 class BaseModel(db.Model):
     """Base class for all SQLAlchemy models"""
 
-    __abstract__ = True  # مهم: لا ينشئ جدول لهذا المودل
+    __abstract__ = True
 
     id = db.Column(
         db.String(60),
@@ -30,15 +30,21 @@ class BaseModel(db.Model):
         onupdate=datetime.utcnow
     )
 
+    def __init__(self, **kwargs):
+        """
+        Initialize model with keyword arguments
+        """
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
     def save(self):
         """Save the current instance"""
         db.session.add(self)
         db.session.commit()
 
     def update(self, data: dict):
-        """
-        Update instance attributes then save
-        """
+        """Update instance attributes then save"""
         if not isinstance(data, dict):
             raise TypeError("data must be a dictionary")
 
