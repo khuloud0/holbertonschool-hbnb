@@ -16,6 +16,16 @@ from app.api.v1.reviews import api as reviews_ns
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
+# 🔐 تعريف JWT Bearer لـ Swagger
+authorizations = {
+    'Bearer': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'Authorization',
+        'description': 'JWT Authorization header. Example: Bearer <access_token>'
+    }
+}
+
 
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
@@ -33,7 +43,9 @@ def create_app(config_class=DevelopmentConfig):
         app,
         title="HBnB API",
         version="1.0",
-        description="HBnB Application API"
+        description="HBnB Application API",
+        authorizations=authorizations,  # 👈 هذا الجديد
+        security='Bearer'               # 👈 وهذا بعد
     )
 
     # Register namespaces
