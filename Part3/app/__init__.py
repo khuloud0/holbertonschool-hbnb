@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from flask_restx import Api
 
 from config import DevelopmentConfig
+from app.db import db   # 👈 الإضافة المطلوبة
 
 from app.api.v1.users import api as users_ns
 from app.api.v1.auth import api as auth_ns
@@ -23,6 +24,7 @@ def create_app(config_class=DevelopmentConfig):
     # init extensions
     bcrypt.init_app(app)
     jwt.init_app(app)
+    db.init_app(app)   # 👈 ربط SQLAlchemy (مرة وحدة فقط)
 
     api = Api(
         app,
