@@ -64,3 +64,51 @@ CREATE TABLE place_amenity (
     FOREIGN KEY (place_id) REFERENCES places(id),
     FOREIGN KEY (amenity_id) REFERENCES amenities(id)
 );
+
+-- =========================
+-- Initial Data
+-- =========================
+
+-- Admin user
+INSERT INTO users (
+    id,
+    first_name,
+    last_name,
+    email,
+    password_hash,
+    is_admin,
+    created_at,
+    updated_at
+) VALUES (
+    '11111111-1111-1111-1111-111111111111',
+    'Admin',
+    'User',
+    'admin@hbnb.com',
+    'hashed_password_example',
+    TRUE,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+);
+
+-- Amenities
+INSERT INTO amenities (
+    id,
+    name,
+    description,
+    created_at,
+    updated_at
+) VALUES
+(
+    '22222222-2222-2222-2222-222222222222',
+    'WiFi',
+    'Wireless Internet',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+),
+(
+    '33333333-3333-3333-3333-333333333333',
+    'Parking',
+    'Free parking',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+);
