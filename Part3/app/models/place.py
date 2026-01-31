@@ -6,7 +6,7 @@ from app.models.base_model import BaseModel
 from app.models.place_amenity import place_amenity
 
 
-class Place(BaseModel, db.Model):
+class Place(BaseModel):
     """Place class"""
 
     __tablename__ = "places"
