@@ -3,7 +3,12 @@ from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.facade import facade
 
-api = Namespace('users', description='User operations')
+# ✅ الإضافة هنا فقط
+api = Namespace(
+    'users',
+    description='User operations',
+    security='Bearer'
+)
 
 # ========================
 # Models
