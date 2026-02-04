@@ -10,10 +10,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/icon.png" />
+    <link rel="icon" type="image/png" href="images/icon.png">
 </head>
 <body>
 
+    <!-- Header -->
+    <header>
+        <img src="images/logo.png" alt="HBNB Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html" class="login-button">Login</a>
+        </nav>
+    </header>
+
+    <!-- Main -->
     <main class="login_page">
         <div class="login_form">
 
@@ -30,7 +40,6 @@
             <form id="login-form">
                 <h2>Login</h2>
 
-                <!-- Error message (used by scripts.js) -->
                 <p id="login-error"></p>
 
                 <label for="email">Email:</label>
@@ -63,8 +72,10 @@
         </div>
     </main>
 
-    <!-- Scripts -->
-    <script src="scripts.js"></script>
+    <!-- Footer -->
+    <footer>
+        <p>All rights reserved</p>
+    </footer>
 
 </body>
 </html>
