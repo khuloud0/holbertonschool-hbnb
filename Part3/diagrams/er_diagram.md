@@ -1,6 +1,5 @@
+```mermaid
 er Diagram
-
-
     USERS {
     
         string id PK
@@ -53,3 +52,4 @@ er Diagram
     PLACES ||--o{ REVIEWS : has
     PLACES ||--o{ PLACE_AMENITY : includes
     AMENITIES ||--o{ PLACE_AMENITY : includes
+```
