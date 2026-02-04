@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash
 from app.services.facade import facade
 
 api = Namespace(
@@ -40,14 +41,14 @@ class UserList(Resource):
     @api.response(403, 'Admin privileges required')
     @jwt_required()
     def post(self):
-        """Create a new user"""
+        """Create a new user (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
         current_user = facade.get_user(current_user_id)
 
         if not current_user or not current_user.is_admin:
             return {'error': 'Admin privileges required'}, 403
 
-        data = api.payload
+        data = api.payload.copy()
 
         if facade.get_user_by_email(data['email']):
             return {'error': 'Email already registered'}, 400
@@ -94,18 +95,21 @@ class UserResource(Resource):
         if not current_user:
             return {'error': 'Admin privileges required'}, 403
 
-        data = api.payload
+        data = api.payload.copy()
 
-        # 👤 User عادي: يقدر يعدل نفسه فقط
+        # 👤 User عادي: يعدل نفسه فقط (بدون email و password)
         if not current_user.is_admin:
             if user_id != current_user_id:
                 return {'error': 'Admin privileges required'}, 403
 
-            # يمنع تغيير email و password
             data.pop('email', None)
             data.pop('password', None)
 
-        # 👑 Admin: يقدر يعدل أي مستخدم + password
+        # 👑 Admin: يقدر يغير كلمة المرور
+        if current_user.is_admin and 'password' in data:
+            data['password_hash'] = generate_password_hash(
+                data.pop('password')
+            )
 
         user = facade.update_user(user_id, data)
         if not user:
