@@ -11,14 +11,18 @@ api = Namespace(
     security="Bearer"
 )
 
+# ========================
+# Models
+# ========================
+
 amenity_model = api.model(
     "Amenity",
     {
         "id": fields.String(readonly=True),
         "name": fields.String(required=True),
         "description": fields.String(required=True),
-        "created_at": fields.DateTime,
-        "updated_at": fields.DateTime,
+        "created_at": fields.DateTime(readonly=True),
+        "updated_at": fields.DateTime(readonly=True),
     },
 )
 
@@ -39,7 +43,7 @@ class AmenityList(Resource):
     @api.response(403, "Admin privileges required")
     @jwt_required()
     def post(self):
-        """Create a new amenity (admin only)"""
+        """Create a new amenity (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
         current_user = facade.get_user(current_user_id)
 
@@ -69,7 +73,7 @@ class AmenityResource(Resource):
     @api.response(403, "Admin privileges required")
     @jwt_required()
     def put(self, amenity_id):
-        """Update amenity (admin only)"""
+        """Update amenity (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
         current_user = facade.get_user(current_user_id)
 
