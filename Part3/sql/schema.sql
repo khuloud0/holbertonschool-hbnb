@@ -84,7 +84,7 @@ INSERT INTO users (
     'Admin',
     'User',
     'admin@hbnb.com',
-    'hashed_password_example',
+    '$2b$12$wZk9QeY6Q6K0j1JQ9FfPDeJZQZ6N9C9e0Z7KkE5rZ6N9C9e0Z7KkE',
     TRUE,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
