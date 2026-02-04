@@ -1,5 +1,6 @@
 ```mermaid
 erDiagram
+
     USERS {
         string id PK
         string first_name
@@ -42,13 +43,12 @@ erDiagram
     }
 
     PLACE_AMENITY {
-        string place_id PK, FK
-        string amenity_id PK, FK
+        string place_id PK
+        string amenity_id PK
     }
 
     USERS ||--o{ PLACES : owns
     USERS ||--o{ REVIEWS : writes
     PLACES ||--o{ REVIEWS : has
-    PLACES ||--o{ PLACE_AMENITY : includes
-    AMENITIES ||--o{ PLACE_AMENITY : includes
+    PLACES }o--o{ AMENITIES : includes
 ```
