@@ -1,7 +1,6 @@
 ```mermaid
-er Diagram
+erDiagram
     USERS {
-    
         string id PK
         string first_name
         string last_name
