@@ -2,10 +2,9 @@
 """Amenities API"""
 
 from flask_restx import Namespace, Resource, fields
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.facade import facade
 
-# ✅ الإضافة هنا فقط
 api = Namespace(
     "amenities",
     description="Amenities operations",
@@ -23,6 +22,9 @@ amenity_model = api.model(
     },
 )
 
+# ========================
+# /amenities
+# ========================
 
 @api.route("/")
 class AmenityList(Resource):
@@ -34,11 +36,22 @@ class AmenityList(Resource):
 
     @api.expect(amenity_model, validate=True)
     @api.marshal_with(amenity_model, code=201)
-    @jwt_required()  # 🔐 جاهز للحماية (حتى لو ما استخدمنا admin الآن)
+    @api.response(403, "Admin privileges required")
+    @jwt_required()
     def post(self):
-        """Create a new amenity (authenticated users)"""
+        """Create a new amenity (admin only)"""
+        current_user_id = get_jwt_identity()
+        current_user = facade.get_user(current_user_id)
+
+        if not current_user or not current_user.is_admin:
+            return {"error": "Admin privileges required"}, 403
+
         return facade.create_amenity(api.payload)
 
+
+# ========================
+# /amenities/<amenity_id>
+# ========================
 
 @api.route("/<amenity_id>")
 class AmenityResource(Resource):
@@ -49,4 +62,22 @@ class AmenityResource(Resource):
         amenity = facade.get_amenity(amenity_id)
         if not amenity:
             api.abort(404, "Amenity not found")
+        return amenity
+
+    @api.expect(amenity_model, validate=True)
+    @api.marshal_with(amenity_model)
+    @api.response(403, "Admin privileges required")
+    @jwt_required()
+    def put(self, amenity_id):
+        """Update amenity (admin only)"""
+        current_user_id = get_jwt_identity()
+        current_user = facade.get_user(current_user_id)
+
+        if not current_user or not current_user.is_admin:
+            return {"error": "Admin privileges required"}, 403
+
+        amenity = facade.update_amenity(amenity_id, api.payload)
+        if not amenity:
+            api.abort(404, "Amenity not found")
+
         return amenity
