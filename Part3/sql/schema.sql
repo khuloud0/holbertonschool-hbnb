@@ -84,7 +84,7 @@ INSERT INTO users (
     'Admin',
     'User',
     'admin@hbnb.com',
-    '$2b$12$wZk9QeY6Q6K0j1JQ9FfPDeJZQZ6N9C9e0Z7KkE5rZ6N9C9e0Z7KkE',
+    'pbkdf2:sha256:600000$PfGURGQy8dWXH8wp$b8b14b7598fb575a8ca48c1aa064e68acf6fd4364dc6f9dbbb0d4b9b3e13941a',
     TRUE,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
