@@ -1,25 +1,52 @@
-# Entity-Relationship (ER) Diagram
+erDiagram
+    USERS {
+        string id PK
+        string first_name
+        string last_name
+        string email
+        string password_hash
+        boolean is_admin
+        datetime created_at
+        datetime updated_at
+    }
 
-This document presents the Entity-Relationship (ER) diagram for the HBnB database schema.
+    PLACES {
+        string id PK
+        string title
+        string description
+        float price
+        float latitude
+        float longitude
+        string owner_id FK
+        datetime created_at
+        datetime updated_at
+    }
 
-## Overview
+    REVIEWS {
+        string id PK
+        string text
+        int rating
+        string user_id FK
+        string place_id FK
+        datetime created_at
+        datetime updated_at
+    }
 
-The ER diagram illustrates the structure of the database and the relationships between the core entities:
-- User
-- Place
-- Review
-- Amenity
-- Place_Amenity
+    AMENITIES {
+        string id PK
+        string name
+        string description
+        datetime created_at
+        datetime updated_at
+    }
 
-It reflects the database design implemented in Part 3 of the project, including primary keys, foreign keys, and relationship types.
+    PLACE_AMENITY {
+        string place_id PK, FK
+        string amenity_id PK, FK
+    }
 
-## Entities and Relationships
-
-- A **User** can own multiple **Places** (one-to-many).
-- A **User** can write multiple **Reviews** (one-to-many).
-- A **Place** can have multiple **Reviews** (one-to-many).
-- A **Place** can include multiple **Amenities**, and an **Amenity** can belong to multiple **Places** (many-to-many), implemented through the `Place_Amenity` association table.
-
-## ER Diagram
-
-![ER Diagram](er_diagram.png)
+    USERS ||--o{ PLACES : owns
+    USERS ||--o{ REVIEWS : writes
+    PLACES ||--o{ REVIEWS : has
+    PLACES ||--o{ PLACE_AMENITY : includes
+    AMENITIES ||--o{ PLACE_AMENITY : includes
