@@ -1,4 +1,5 @@
 erDiagram
+
     USERS {
         string id PK
         string first_name
