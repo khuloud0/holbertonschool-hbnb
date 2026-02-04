@@ -3,7 +3,6 @@ from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.facade import facade
 
-# ✅ الإضافة هنا فقط
 api = Namespace(
     'users',
     description='User operations',
@@ -38,8 +37,16 @@ class UserList(Resource):
     @api.expect(user_model, validate=True)
     @api.response(201, 'User successfully created')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Admin privileges required')
+    @jwt_required()
     def post(self):
         """Create a new user"""
+        current_user_id = get_jwt_identity()
+        current_user = facade.get_user(current_user_id)
+
+        if not current_user or not current_user.is_admin:
+            return {'error': 'Admin privileges required'}, 403
+
         data = api.payload
 
         if facade.get_user_by_email(data['email']):
@@ -76,7 +83,7 @@ class UserResource(Resource):
 
     @api.expect(user_update_model, validate=True)
     @api.response(200, 'User updated successfully')
-    @api.response(403, 'Forbidden')
+    @api.response(403, 'Admin privileges required')
     @api.response(404, 'User not found')
     @jwt_required()
     def put(self, user_id):
@@ -85,20 +92,20 @@ class UserResource(Resource):
         current_user = facade.get_user(current_user_id)
 
         if not current_user:
-            return {'error': 'Unauthorized'}, 403
+            return {'error': 'Admin privileges required'}, 403
 
         data = api.payload
 
         # 👤 User عادي: يقدر يعدل نفسه فقط
         if not current_user.is_admin:
             if user_id != current_user_id:
-                return {'error': 'You can only update your own account'}, 403
+                return {'error': 'Admin privileges required'}, 403
 
             # يمنع تغيير email و password
             data.pop('email', None)
             data.pop('password', None)
 
-        # 👑 Admin: مسموح له كل شيء
+        # 👑 Admin: يقدر يعدل أي مستخدم + password
 
         user = facade.update_user(user_id, data)
         if not user:
