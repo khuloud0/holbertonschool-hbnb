@@ -26,6 +26,14 @@ amenity_model = api.model(
     },
 )
 
+amenity_payload = api.model(
+    "AmenityPayload",
+    {
+        "name": fields.String(required=True),
+        "description": fields.String(required=True),
+    },
+)
+
 # ========================
 # /amenities
 # ========================
@@ -38,19 +46,23 @@ class AmenityList(Resource):
         """Retrieve all amenities (public)"""
         return facade.get_all_amenities()
 
-    @api.expect(amenity_model, validate=True)
+    @api.expect(amenity_payload, validate=True)
     @api.marshal_with(amenity_model, code=201)
     @api.response(403, "Admin privileges required")
-    @jwt_required()
+    @jwt_required(optional=True)  # ✅ مهم: بدون توكن ما يصير 500
     def post(self):
         """Create a new amenity (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
-        current_user = facade.get_user(current_user_id)
 
+        # إذا ما فيه توكن أصلاً
+        if not current_user_id:
+            return {"error": "Admin privileges required"}, 403
+
+        current_user = facade.get_user(current_user_id)
         if not current_user or not current_user.is_admin:
             return {"error": "Admin privileges required"}, 403
 
-        return facade.create_amenity(api.payload)
+        return facade.create_amenity(api.payload), 201
 
 
 # ========================
@@ -68,15 +80,18 @@ class AmenityResource(Resource):
             api.abort(404, "Amenity not found")
         return amenity
 
-    @api.expect(amenity_model, validate=True)
+    @api.expect(amenity_payload, validate=True)
     @api.marshal_with(amenity_model)
     @api.response(403, "Admin privileges required")
-    @jwt_required(optional=True)
+    @jwt_required(optional=True)  # ✅ نفس الفكرة هنا
     def put(self, amenity_id):
         """Update amenity (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
-        current_user = facade.get_user(current_user_id)
 
+        if not current_user_id:
+            return {"error": "Admin privileges required"}, 403
+
+        current_user = facade.get_user(current_user_id)
         if not current_user or not current_user.is_admin:
             return {"error": "Admin privileges required"}, 403
 
@@ -84,4 +99,4 @@ class AmenityResource(Resource):
         if not amenity:
             api.abort(404, "Amenity not found")
 
-        return amenity
+        return amenity, 200
