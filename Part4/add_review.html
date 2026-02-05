@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Review</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Review</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <img src="images/logo.png" alt="HBNB Logo" class="logo">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="login.html" class="login-button">Login</a>
-        </nav>
-    </header>
+  <!-- Header -->
+  <header>
+    <img src="images/logo.png" class="logo" alt="Logo">
+    <a href="login.html" class="login-button">Login</a>
+  </header>
 
-    <!-- Main Content -->
-    <main>
-        <h1>Add a Review</h1>
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+  </nav>
 
-        <!-- Static place identification -->
-        <p><strong>Reviewing:</strong> Sample Place</p>
+  <!-- Main Content -->
+  <main>
+    <section class="place-card">
+      <h1>Add a Review</h1>
 
-        <form id="review-form">
-            <label for="review">Your Review:</label>
-            <textarea id="review" name="review" required></textarea>
+      <!-- Identify the place (static for Task 0) -->
+      <p><strong>Place:</strong> Cozy Apartment</p>
 
-            <label for="rating">Rating:</label>
-            <select id="rating" name="rating" required>
-                <option value="">Select rating</option>
-                <option value="1">1 - Very bad</option>
-                <option value="2">2 - Bad</option>
-                <option value="3">3 - Average</option>
-                <option value="4">4 - Good</option>
-                <option value="5">5 - Excellent</option>
-            </select>
+      <form id="review-form" class="add-review">
 
-            <button type="submit">Submit Review</button>
-        </form>
-    </main>
+        <label for="review-text">Your Review</label>
+        <textarea
+          id="review-text"
+          name="review-text"
+          rows="5"
+          required
+        ></textarea>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 HBNB. All rights reserved.</p>
-    </footer>
+        <label for="rating">Rating</label>
+        <select id="rating" name="rating" required>
+          <option value="">Select rating</option>
+          <option value="1">★☆☆☆☆</option>
+          <option value="2">★★☆☆☆</option>
+          <option value="3">★★★☆☆</option>
+          <option value="4">★★★★☆</option>
+          <option value="5">★★★★★</option>
+        </select>
+
+        <button type="submit">Submit Review</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
