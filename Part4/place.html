@@ -1,66 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Place Details</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Details</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <img src="images/logo.png" alt="HBNB Logo" class="logo">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="login.html" class="login-button">Login</a>
-        </nav>
-    </header>
+  <!-- Header -->
+  <header>
+    <img src="images/logo.png" class="logo" alt="Logo">
+    <a href="login.html" class="login-button">Login</a>
+  </header>
 
-    <!-- Main -->
-    <main>
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+  </nav>
 
-        <!-- Place Details -->
-        <section class="place-details">
-            <h1>Beautiful Apartment</h1>
+  <!-- Main Content -->
+  <main>
 
-            <div class="place-info">
-                <p><strong>Host:</strong> John Doe</p>
-                <p><strong>Price:</strong> $120 per night</p>
-                <p><strong>Description:</strong> A beautiful and cozy apartment in the city center.</p>
-                <p><strong>Amenities:</strong> WiFi, Air conditioning, Kitchen</p>
-            </div>
-        </section>
+    <!-- Place Details -->
+    <section id="place-details" class="place-card">
+      <h1>Cozy Apartment</h1>
+      <p><strong>Host:</strong> John Doe</p>
+      <p><strong>Price per night:</strong> $120</p>
+      <p><strong>Description:</strong> A cozy apartment located in the city center.</p>
 
-        <!-- Reviews -->
-        <section class="reviews">
-            <h2>Reviews</h2>
+      <div class="place-info">
+        <p><strong>Amenities:</strong></p>
+        <ul>
+          <li>WiFi</li>
+          <li>Air Conditioning</li>
+          <li>Kitchen</li>
+        </ul>
+      </div>
+    </section>
 
-            <article class="review-card">
-                <p><strong>User:</strong> Sarah</p>
-                <p><strong>Rating:</strong> ⭐⭐⭐⭐☆</p>
-                <p>Very nice place, clean and comfortable.</p>
-            </article>
+    <!-- Reviews -->
+    <section id="reviews">
+      <h2>Reviews</h2>
 
-            <article class="review-card">
-                <p><strong>User:</strong> Ahmed</p>
-                <p><strong>Rating:</strong> ⭐⭐⭐⭐⭐</p>
-                <p>Excellent location and friendly host.</p>
-            </article>
-        </section>
+      <div class="review-card">
+        <p><strong>User:</strong> Sarah</p>
+        <p>★★★★★</p>
+        <p>Great place, very clean!</p>
+      </div>
 
-        <!-- Add Review Button -->
-        <section class="add-review">
-            <a href="add_review.html" class="details-button">Add a Review</a>
-        </section>
+      <div class="review-card">
+        <p><strong>User:</strong> Ahmed</p>
+        <p>★★★★☆</p>
+        <p>Nice location and friendly host.</p>
+      </div>
+    </section>
 
-    </main>
+    <!-- Add Review Button -->
+    <section>
+      <a href="add_review.html" class="details-button">Add Review</a>
+    </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 HBNB. All rights reserved.</p>
-    </footer>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
