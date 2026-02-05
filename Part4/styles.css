@@ -128,6 +128,12 @@ select {
   border-radius: 5px;
 }
 
+/* ✅ FIX: unify input & select height (visual only) */
+input,
+select {
+  height: 42px;
+}
+
 textarea {
   resize: vertical;
 }
