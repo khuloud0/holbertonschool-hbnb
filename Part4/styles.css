@@ -18,7 +18,7 @@ body {
 
 /* ===== Header ===== */
 header {
-  background-color: #222;
+  background-color: #4157ff;
   color: #fff;
   padding: 1rem 2rem;
   display: flex;
@@ -45,7 +45,7 @@ header {
 
 /* ===== Navigation ===== */
 nav {
-  background-color: #333;
+  background-color: #3d50e7;
   padding: 0.6rem 2rem;
 }
 
