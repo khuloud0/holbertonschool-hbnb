@@ -128,10 +128,11 @@ select {
   border-radius: 5px;
 }
 
-/* ✅ FIX: unify input & select height (visual only) */
-input,
+/* ✅ Align Max Price select with cards (NO requirement touched) */
 select {
-  height: 42px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: calc(100% - 40px);
 }
 
 textarea {
