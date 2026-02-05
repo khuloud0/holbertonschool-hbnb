@@ -122,16 +122,13 @@ input,
 textarea,
 select {
   width: 100%;
-  padding: 0.6rem;
+  padding: 10px;
   margin-top: 0.4rem;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-select {
-  display: block;
-  margin: 20px;
-}
+
 
 textarea {
   resize: vertical;
