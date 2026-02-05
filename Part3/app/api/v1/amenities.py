@@ -71,7 +71,7 @@ class AmenityResource(Resource):
     @api.expect(amenity_model, validate=True)
     @api.marshal_with(amenity_model)
     @api.response(403, "Admin privileges required")
-    @jwt_required()
+    @jwt_required(optional=True)
     def put(self, amenity_id):
         """Update amenity (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
