@@ -59,10 +59,7 @@ class UserList(Resource):
             if not current_user or not current_user.is_admin:
                 return {'error': 'Admin privileges required'}, 403
 
-        # تشفير كلمة المرور
-        data['password_hash'] = generate_password_hash(
-            data.pop('password')
-        )
+        data = api.payload.copy()
 
         try:
             user = facade.create_user(data)
