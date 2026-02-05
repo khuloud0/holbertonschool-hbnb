@@ -51,15 +51,16 @@ class UserList(Resource):
         users = facade.get_all_users()
         is_first_user = len(users) == 0
 
-        # إذا مو أول مستخدم → لازم Admin
+        # 🚫 مو أول مستخدم → لازم Admin
         if not is_first_user:
             current_user_id = get_jwt_identity()
-            current_user = facade.get_user(current_user_id)
 
-            if not current_user or not current_user.is_admin:
+            if not current_user_id:
                 return {'error': 'Admin privileges required'}, 403
 
-        data = api.payload.copy()
+            current_user = facade.get_user(current_user_id)
+            if not current_user or not current_user.is_admin:
+                return {'error': 'Admin privileges required'}, 403
 
         try:
             user = facade.create_user(data)
@@ -91,25 +92,30 @@ class UserResource(Resource):
     @api.expect(user_update_model, validate=True)
     @api.response(200, 'User updated successfully')
     @api.response(403, 'Admin privileges required')
-    @jwt_required()
+    @jwt_required(optional=True)
     def put(self, user_id):
         current_user_id = get_jwt_identity()
-        current_user = facade.get_user(current_user_id)
 
+        # 🚫 بدون توكن
+        if not current_user_id:
+            return {'error': 'Admin privileges required'}, 403
+
+        current_user = facade.get_user(current_user_id)
         if not current_user:
             return {'error': 'Admin privileges required'}, 403
 
         data = api.payload.copy()
 
-        # User عادي: يعدل نفسه فقط
+        # 🚫 User عادي
         if not current_user.is_admin:
             if user_id != current_user_id:
                 return {'error': 'Admin privileges required'}, 403
 
+            # المستخدم العادي ما يغير الإيميل ولا الباسورد
             data.pop('email', None)
             data.pop('password', None)
 
-        # Admin: يقدر يغير كلمة المرور
+        # ✅ Admin يغير كلمة المرور
         if current_user.is_admin and 'password' in data:
             data['password_hash'] = generate_password_hash(
                 data.pop('password')
