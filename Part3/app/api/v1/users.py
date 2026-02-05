@@ -39,7 +39,7 @@ class UserList(Resource):
     @api.expect(user_model, validate=True)
     @api.response(201, 'User successfully created')
     @api.response(403, 'Admin privileges required')
-    @jwt_required(optional=True)
+    @jwt_required()
     def post(self):
         """
         Create a new user
