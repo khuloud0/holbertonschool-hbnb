@@ -131,7 +131,6 @@ select {
 select {
   display: block;
   margin: 20px;
-  width: auto;
 }
 
 textarea {
