@@ -49,18 +49,17 @@ class AmenityList(Resource):
     @api.expect(amenity_payload, validate=True)
     @api.marshal_with(amenity_model, code=201)
     @api.response(403, "Admin privileges required")
-    @jwt_required(optional=True)  # ✅ مهم: بدون توكن ما يصير 500
+    @jwt_required(optional=True)
     def post(self):
         """Create a new amenity (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
 
-        # إذا ما فيه توكن أصلاً
         if not current_user_id:
-            return {"error": "Admin privileges required"}, 403
+            api.abort(403, "Admin privileges required")
 
         current_user = facade.get_user(current_user_id)
         if not current_user or not current_user.is_admin:
-            return {"error": "Admin privileges required"}, 403
+            api.abort(403, "Admin privileges required")
 
         return facade.create_amenity(api.payload), 201
 
@@ -83,17 +82,17 @@ class AmenityResource(Resource):
     @api.expect(amenity_payload, validate=True)
     @api.marshal_with(amenity_model)
     @api.response(403, "Admin privileges required")
-    @jwt_required(optional=True)  # ✅ نفس الفكرة هنا
+    @jwt_required(optional=True)
     def put(self, amenity_id):
         """Update amenity (ADMIN ONLY)"""
         current_user_id = get_jwt_identity()
 
         if not current_user_id:
-            return {"error": "Admin privileges required"}, 403
+            api.abort(403, "Admin privileges required")
 
         current_user = facade.get_user(current_user_id)
         if not current_user or not current_user.is_admin:
-            return {"error": "Admin privileges required"}, 403
+            api.abort(403, "Admin privileges required")
 
         amenity = facade.update_amenity(amenity_id, api.payload)
         if not amenity:
