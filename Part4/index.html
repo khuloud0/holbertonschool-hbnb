@@ -1,50 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Places</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List of Places</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <img src="images/logo.png" alt="HBNB Logo" class="logo">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="login.html" class="login-button">Login</a>
-        </nav>
-    </header>
+  <!-- Header -->
+  <header>
+    <img src="images/logo.png" class="logo" alt="Logo">
+    <a href="login.html" class="login-button">Login</a>
+  </header>
 
-    <!-- Main Content -->
-    <main>
-        <h1>Available Places</h1>
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+  </nav>
 
-        <section class="places">
+  <!-- Main Content -->
+  <main>
 
-            <!-- Place Card -->
-            <article class="place-card">
-                <h2>Sample Place</h2>
-                <p>Price per night: $120</p>
-                <a href="place.html" class="details-button">View Details</a>
-            </article>
+    <!-- Filter Section (شكلي فقط الآن) -->
+    <section id="filter">
+      <label for="price-filter">Max Price:</label>
+      <select id="price-filter">
+        <option value="">Any</option>
+        <option value="50">$50</option>
+        <option value="100">$100</option>
+        <option value="200">$200</option>
+      </select>
+    </section>
 
-            <!-- Place Card -->
-            <article class="place-card">
-                <h2>Another Place</h2>
-                <p>Price per night: $90</p>
-                <a href="place.html" class="details-button">View Details</a>
-            </article>
+    <!-- Places List -->
+    <section id="places-list">
 
-        </section>
-    </main>
+      <div class="place-card">
+        <h2>Cozy Apartment</h2>
+        <p>Price per night: $100</p>
+        <a href="place.html" class="details-button">View Details</a>
+      </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 HBNB. All rights reserved.</p>
-    </footer>
+      <div class="place-card">
+        <h2>Beach House</h2>
+        <p>Price per night: $200</p>
+        <a href="place.html" class="details-button">View Details</a>
+      </div>
+
+      <div class="place-card">
+        <h2>Mountain Cabin</h2>
+        <p>Price per night: $80</p>
+        <a href="place.html" class="details-button">View Details</a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
