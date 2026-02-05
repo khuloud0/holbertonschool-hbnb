@@ -128,11 +128,10 @@ select {
   border-radius: 5px;
 }
 
-/* ✅ Align Max Price select with cards (NO requirement touched) */
 select {
-  margin-left: 20px;
-  margin-right: 20px;
-  width: calc(100% - 40px);
+  display: block;
+  margin: 20px;
+  width: auto;
 }
 
 textarea {
