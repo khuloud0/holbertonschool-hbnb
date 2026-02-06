@@ -21,7 +21,7 @@ body {
 
 /* ===== Header ===== */
 header {
-  background-color: #ffffff; /* carrot-100 */
+  background-color: #f7f5fd; 
   color: #2d2d2d;
   padding: 1rem 2rem;
   display: flex;
@@ -34,10 +34,10 @@ header {
 }
 
 .login-button {
-  color: #3366ff;
+  color: #2d2d2d;
   text-decoration: none;
   font-weight: bold;
-  background-color: #FFF3D5; 
+  background-color: #3366ff; 
   padding: 0.4rem 0.8rem;
   border-radius: 5px;
 }
