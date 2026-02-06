@@ -1,6 +1,6 @@
 /*
-  Dark Mode UI styles
-  Haiti Palette
+  Light Mode UI styles
+  Carrot Palette
   Fully compliant with Task 0 requirements
 */
 
@@ -14,15 +14,15 @@
 
 /* ===== Body ===== */
 body {
-  background-color: #151131; /* haiti-900 */
-  color: #F4F2F8;           /* haiti-50 */
+  background-color: #FFF3D5; /* carrot-50 */
+  color: #602706;           /* carrot-900 */
   line-height: 1.6;
 }
 
 /* ===== Header ===== */
 header {
-  background-color: #1A153D; /* haiti-800 */
-  color: #F4F2F8;
+  background-color: #FFA02E; /* carrot-400 */
+  color: #602706;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
@@ -34,26 +34,26 @@ header {
 }
 
 .login-button {
-  color: #F4F2F8;
+  color: #602706;
   text-decoration: none;
   font-weight: bold;
-  background-color: #757281; /* haiti-400 */
+  background-color: #FFD181; /* carrot-200 */
   padding: 0.4rem 0.8rem;
   border-radius: 5px;
 }
 
 .login-button:hover {
-  background-color: #A7A3B3; /* haiti-300 */
+  background-color: #FFBE62; /* carrot-300 */
 }
 
 /* ===== Navigation ===== */
 nav {
-  background-color: #29244A; /* haiti-700 */
+  background-color: #FFBE62; /* carrot-300 */
   padding: 0.6rem 2rem;
 }
 
 nav a {
-  color: #F4F2F8;
+  color: #602706;
   text-decoration: none;
   margin-right: 1.5rem;
   font-weight: 500;
@@ -70,26 +70,26 @@ main {
   margin: auto;
 }
 
-/* ===== Cards (REQUIRED VALUES – DO NOT CHANGE) ===== */
+/* ===== Cards (REQUIRED VALUES — DO NOT CHANGE) ===== */
 .place-card,
 .review-card {
   margin: 20px;                 /* REQUIRED */
   padding: 10px;                /* REQUIRED */
   border: 1px solid #ddd;       /* REQUIRED */
   border-radius: 10px;          /* REQUIRED */
-  background-color: #3F395C;    /* haiti-600 */
+  background-color: #FFF4AB;    /* carrot-100 */
 }
 
-/* Card text */
+/* Card content */
 .place-card h1,
 .place-card h2 {
   margin-bottom: 0.5rem;
-  color: #F4F2F8;
+  color: #602706;
 }
 
 .place-card p,
 .review-card p {
-  color: #CDCAD9; /* haiti-200 */
+  color: #7A3108; /* carrot-800 */
 }
 
 .review-card {
@@ -102,8 +102,8 @@ button {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1.2rem;
-  background-color: #757281; /* haiti-400 */
-  color: #F4F2F8;
+  background-color: #DB7E21; /* carrot-500 */
+  color: #FFF3D5;
   text-decoration: none;
   border: none;
   border-radius: 6px;
@@ -113,8 +113,7 @@ button {
 
 .details-button:hover,
 button:hover {
-  background-color: #A7A3B3; /* haiti-300 */
-  color: #151131;
+  background-color: #B75F17; /* carrot-600 */
 }
 
 /* ===== Forms ===== */
@@ -126,7 +125,7 @@ label {
   display: block;
   margin-top: 1rem;
   font-weight: bold;
-  color: #F4F2F8;
+  color: #602706;
 }
 
 input,
@@ -135,24 +134,19 @@ select {
   width: 100%;
   padding: 10px;
   margin-top: 0.4rem;
-  border: 1px solid #757281; /* haiti-400 */
+  border: 1px solid #DB7E21; /* carrot-500 */
   border-radius: 5px;
-  background-color: #58536E; /* haiti-500 */
-  color: #F4F2F8;
+  background-color: #FFF3D5; /* carrot-50 */
+  color: #602706;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #CDCAD9; /* haiti-200 */
+  color: #93450E; /* carrot-700 */
 }
 
 select {
   appearance: none;
-}
-
-/* Fix Max Price width alignment */
-select {
-  width: 100%;
 }
 
 /* ===== Textarea ===== */
@@ -162,8 +156,8 @@ textarea {
 
 /* ===== Footer ===== */
 footer {
-  background-color: #1A153D; /* haiti-800 */
-  color: #F4F2F8;
+  background-color: #FFA02E; /* carrot-400 */
+  color: #602706;
   text-align: center;
   padding: 1rem;
   margin-top: 3rem;
