@@ -14,15 +14,15 @@
 
 /* ===== Body ===== */
 body {
-  background-color: #FFF8E8; /* very soft carrot */
+  background-color: #ffffff; /* very soft carrot */
   color: #5A3A1B;
   line-height: 1.6;
 }
 
 /* ===== Header ===== */
 header {
-  background-color: #FFE4AB; /* carrot-100 */
-  color: #5A3A1B;
+  background-color: #ffffff; /* carrot-100 */
+  color: #2d2d2d;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
@@ -34,26 +34,26 @@ header {
 }
 
 .login-button {
-  color: #5A3A1B;
+  color: #3366ff;
   text-decoration: none;
   font-weight: bold;
-  background-color: #FFF3D5; /* carrot-50 */
+  background-color: #FFF3D5; 
   padding: 0.4rem 0.8rem;
   border-radius: 5px;
 }
 
 .login-button:hover {
-  background-color: #FFD181; /* carrot-200 */
+  background-color: #FFD181; 
 }
 
 /* ===== Navigation ===== */
 nav {
-  background-color: #FFF3D5; /* carrot-50 */
+  background-color: #f7f5fd; 
   padding: 0.6rem 2rem;
 }
 
 nav a {
-  color: #5A3A1B;
+  color: #2d2d2d;
   text-decoration: none;
   margin-right: 1.5rem;
   font-weight: 500;
@@ -77,14 +77,14 @@ main {
   padding: 10px;                /* REQUIRED */
   border: 1px solid #ddd;       /* REQUIRED */
   border-radius: 10px;          /* REQUIRED */
-  background-color: #FFFFFF;
+  background-color: #fcfaf5;
 }
 
 /* Card text */
 .place-card h1,
 .place-card h2 {
   margin-bottom: 0.5rem;
-  color: #5A3A1B;
+  color: #2d2d2d;
 }
 
 .place-card p,
@@ -102,8 +102,8 @@ button {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1.2rem;
-  background-color: #FFD181; /* carrot-200 */
-  color: #5A3A1B;
+  background-color: #3dd57e; 
+  color: #2d2d2d;
   text-decoration: none;
   border: none;
   border-radius: 6px;
@@ -136,13 +136,13 @@ select {
   margin-top: 0.4rem;
   border: 1px solid #FFD181;
   border-radius: 5px;
-  background-color: #FFFDF7;
-  color: #5A3A1B;
+  background-color: #fcfaf5;
+  color: #2d2d2d;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #9A7A55;
+  color: #2d2d2d;
 }
 
 textarea {
@@ -151,8 +151,8 @@ textarea {
 
 /* ===== Footer ===== */
 footer {
-  background-color: #FFE4AB; /* carrot-100 */
-  color: #5A3A1B;
+  background-color: #f2faf8; 
+  color: #2d2d2d;
   text-align: center;
   padding: 1rem;
   margin-top: 3rem;
