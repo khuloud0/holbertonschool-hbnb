@@ -1,6 +1,5 @@
 /*
-  Clean, minimal, Airbnb-style UI
-  Fully compliant with Task 0 requirements
+  Clean, minimal, and safe 
 */
 
 /* ===== Reset ===== */
@@ -71,7 +70,7 @@ main {
   margin: auto;
 }
 
-/* ===== Cards (REQUIRED — DO NOT CHANGE VALUES) ===== */
+/* ===== Cards (REQUIRED — DO NOT CHANGE) ===== */
 .place-card,
 .review-card {
   margin: 20px;                 /* REQUIRED */
@@ -81,14 +80,13 @@ main {
   background-color: #FFFFFF;
 }
 
-/* Card titles */
+/* Card text */
 .place-card h1,
 .place-card h2 {
   margin-bottom: 0.5rem;
   color: #222222;
 }
 
-/* Card text */
 .place-card p,
 .review-card p {
   color: #717171;
@@ -162,45 +160,37 @@ footer {
   border-top: 1px solid #DDDDDD;
 }
 
-/* ==================================================
-   Place Details Page Enhancements (SAFE)
-   No required values touched
-================================================== */
+/* ================================================= */
+/* ============ Enhancements (SAFE) ================ */
+/* ================================================= */
 
-/* Space after place details card */
+/* Make footer stick to bottom on short pages (login) */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Better spacing for place details & reviews */
 #place-details {
   margin-bottom: 2rem;
 }
 
-/* Amenities list */
-.place-info ul {
-  margin-top: 0.5rem;
-  padding-left: 1.2rem;
-}
-
-.place-info li {
-  margin-bottom: 0.35rem;
-  color: #717171;
-}
-
-/* Reviews section */
-#reviews {
-  margin-top: 2rem;
-}
-
-/* Reviews title aligned with cards */
 #reviews h2 {
-  margin-left: 20px; /* same as card margin */
-  margin-bottom: 0.5rem;
+  margin: 1.5rem 20px 0.5rem;
+}
+
+/* Reviews layout polish */
+.review-card p:first-child {
+  font-weight: bold;
   color: #222222;
 }
 
-/* Review spacing */
-.review-card p {
-  margin-bottom: 0.4rem;
-}
-
-/* Add Review button alignment */
-main section a.details-button {
+/* Center Add Review button nicely */
+section > .details-button {
   margin-left: 20px;
 }
