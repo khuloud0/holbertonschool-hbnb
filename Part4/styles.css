@@ -1,5 +1,5 @@
 /*
-  Light Pastel UI styles
+  Clean, minimal, and safe 
 */
 
 /* ===== Reset ===== */
@@ -12,19 +12,20 @@
 
 /* ===== Body ===== */
 body {
-  background-color: #FBFBFB;
-  color: #121212;
+  background-color: #F7F7F7;
+  color: #222222;
   line-height: 1.6;
 }
 
 /* ===== Header ===== */
 header {
-  background-color: #EEF BFA;
-  color: #121212;
+  background-color: #FFFFFF;
+  color: #222222;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #DDDDDD;
 }
 
 .logo {
@@ -32,26 +33,27 @@ header {
 }
 
 .login-button {
-  color: #ffffff;
+  color: #FFFFFF;
   text-decoration: none;
   font-weight: bold;
-  background-color: #475DBD;
-  padding: 0.4rem 0.8rem;
-  border-radius: 5px;
+  background-color: #FF385C;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
 }
 
 .login-button:hover {
-  background-color: #6D87D0;
+  background-color: #E03150;
 }
 
 /* ===== Navigation ===== */
 nav {
-  background-color: #BAC5CF;
+  background-color: #FFFFFF;
   padding: 0.6rem 2rem;
+  border-bottom: 1px solid #DDDDDD;
 }
 
 nav a {
-  color: #174478;
+  color: #222222;
   text-decoration: none;
   margin-right: 1.5rem;
   font-weight: 500;
@@ -82,12 +84,12 @@ main {
 .place-card h1,
 .place-card h2 {
   margin-bottom: 0.5rem;
-  color: #174478;
+  color: #222222;
 }
 
 .place-card p,
 .review-card p {
-  color: #121212;
+  color: #717171;
 }
 
 .review-card {
@@ -99,19 +101,19 @@ main {
 button {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.5rem 1.2rem;
-  background-color: #59D48E;
-  color: #121212;
+  padding: 0.55rem 1.3rem;
+  background-color: #FF385C;
+  color: #FFFFFF;
   text-decoration: none;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.95rem;
 }
 
 .details-button:hover,
 button:hover {
-  background-color: #74B4C8;
+  background-color: #E03150;
 }
 
 /* ===== Forms ===== */
@@ -123,7 +125,7 @@ label {
   display: block;
   margin-top: 1rem;
   font-weight: bold;
-  color: #174478;
+  color: #222222;
 }
 
 input,
@@ -132,15 +134,15 @@ select {
   width: 100%;
   padding: 10px;
   margin-top: 0.4rem;
-  border: 1px solid #BAC5CF;
-  border-radius: 5px;
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
   background-color: #FFFFFF;
-  color: #121212;
+  color: #222222;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #BAC5CF;
+  color: #717171;
 }
 
 textarea {
@@ -149,10 +151,11 @@ textarea {
 
 /* ===== Footer ===== */
 footer {
-  background-color: #EEF BFA;
-  color: #121212;
+  background-color: #FFFFFF;
+  color: #717171;
   text-align: center;
   padding: 1rem;
   margin-top: 3rem;
   font-size: 0.9rem;
+  border-top: 1px solid #DDDDDD;
 }
