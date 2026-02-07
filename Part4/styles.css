@@ -36,7 +36,7 @@ header {
   color: #FFFFFF;
   text-decoration: none;
   font-weight: bold;
-  background-color: #FF385C;
+  background-color: #DE3151;
   padding: 0.45rem 0.9rem;
   border-radius: 8px;
 }
@@ -102,7 +102,7 @@ button {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.55rem 1.3rem;
-  background-color: #FF385C;
+  background-color: #DE3151;
   color: #FFFFFF;
   text-decoration: none;
   border: none;
