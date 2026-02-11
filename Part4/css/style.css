@@ -1,0 +1,210 @@
+/* ========== Global Styles ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* ========== Header Styles ========== */
+header {
+    background-color: #ff5a5f;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 1.8rem;
+}
+
+/* Navigation Styles */
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+nav a.active {
+    background-color: rgba(255,255,255,0.3);
+}
+
+/* ========== Main Content Styles ========== */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* ========== Filter Section Styles ========== */
+.filters {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filters h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+#price-filter {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+    cursor: pointer;
+}
+
+/* ========== Places Section Styles ========== */
+.places {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.places h2 {
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* Places Grid Container */
+.places-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Individual Place Card */
+.place-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: white;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.place-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.place-card h3 {
+    color: #ff5a5f;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.place-card .description {
+    color: #666;
+    margin: 0.5rem 0;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.place-card .location {
+    color: #888;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.place-card .price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2ecc71;
+    margin: 0.5rem 0;
+}
+
+.place-card .rating {
+    color: #f39c12;
+    margin: 0.5rem 0;
+    font-weight: bold;
+}
+
+/* View Details Button */
+.btn-view {
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-view:hover {
+    background-color: #ff4449;
+}
+
+/* ========== Footer Styles ========== */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* ========== Utility Classes ========== */
+.error {
+    color: #e74c3c;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+}
+
+.no-places {
+    color: #888;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+}
+
+/* ========== Responsive Design ========== */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    nav {
+        margin-top: 1rem;
+    }
+    
+    nav a {
+        margin: 0 0.5rem;
+    }
+    
+    .places-container {
+        grid-template-columns: 1fr;
+    }
+    
+    #price-filter {
+        width: 100%;
+    }
+}
