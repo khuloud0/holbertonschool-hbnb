@@ -6,13 +6,12 @@
   <title>List of Places</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
   <!-- Header -->
   <header>
     <img src="images/logo.png" class="logo" alt="Logo">
-    <a href="login.html" class="login-button">Login</a>
+    <a href="login.html" class="login-button" id="login-link">Login</a>
   </header>
 
   <!-- Navigation -->
@@ -24,38 +23,20 @@
   <!-- Main Content -->
   <main>
 
-    <!-- Filter Section (شكلي فقط الآن) -->
+    <!-- Filter Section -->
     <section id="filter">
       <label for="price-filter">Max Price:</label>
       <select id="price-filter">
-        <option value="">Any</option>
-        <option value="50">$50</option>
-        <option value="100">$100</option>
-        <option value="200">$200</option>
+        <option value="all">All</option>
+        <option value="10">$10 or less</option>
+        <option value="50">$50 or less</option>
+        <option value="100">$100 or less</option>
       </select>
     </section>
 
     <!-- Places List -->
     <section id="places-list">
-
-      <div class="place-card">
-        <h2>Cozy Apartment</h2>
-        <p>Price per night: $100</p>
-        <a href="place.html" class="details-button">View Details</a>
-      </div>
-
-      <div class="place-card">
-        <h2>Beach House</h2>
-        <p>Price per night: $200</p>
-        <a href="place.html" class="details-button">View Details</a>
-      </div>
-
-      <div class="place-card">
-        <h2>Mountain Cabin</h2>
-        <p>Price per night: $80</p>
-        <a href="place.html" class="details-button">View Details</a>
-      </div>
-
+      <!-- Places will be dynamically populated here by JavaScript -->
     </section>
 
   </main>
@@ -65,5 +46,7 @@
     <p>© 2026 HBNB. All rights reserved.</p>
   </footer>
 
+  <!-- JavaScript -->
+  <script src="scripts.js"></script>
 </body>
 </html>
