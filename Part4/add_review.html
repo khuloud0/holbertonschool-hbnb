@@ -1,63 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Review</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBNB - Submit Your Review</title>
+    <link rel="stylesheet" href="../style/styles.css">
 </head>
 
 <body>
+    <header>
+        <img src="../style/images/logo.png" alt="HBNB Logo" class="brand-logo">
+        <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="login.html">Sign In</a>
+        </nav>
+    </header>
 
-  <!-- Header -->
-  <header>
-    <img src="images/logo.png" class="logo" alt="Logo">
-    <a href="login.html" class="login-button">Login</a>
-  </header>
+    <main>
+        <section class="review-section">
+            <h2>Share Your Experience</h2>
+            <form id="reviewForm">
+                <div class="input-group">
+                    <label for="rating">Your Rating</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Choose a rating</option>
+                        <option value="1">⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="text">Your Review</label>
+                    <textarea id="text" name="text" required minlength="10"
+                        placeholder="Tell us about your stay..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </section>
+    </main>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="login.html">Login</a>
-  </nav>
+    <footer class="footer">
+        <p>&copy; 2026 HBNB. All rights reserved.</p>
+    </footer>
 
-  <!-- Main Content -->
-  <main>
-    <section class="place-card">
-      <h1>Add a Review</h1>
-
-      <!-- Identify the place (static for Task 0) -->
-      <p><strong>Place:</strong> Cozy Apartment</p>
-
-      <form id="review-form" class="add-review">
-
-        <label for="review-text">Your Review</label>
-        <textarea
-          id="review-text"
-          name="review-text"
-          rows="5"
-          required
-        ></textarea>
-
-        <label for="rating">Rating</label>
-        <select id="rating" name="rating" required>
-          <option value="">Select rating</option>
-          <option value="1">★☆☆☆☆</option>
-          <option value="2">★★☆☆☆</option>
-          <option value="3">★★★☆☆</option>
-          <option value="4">★★★★☆</option>
-          <option value="5">★★★★★</option>
-        </select>
-
-        <button type="submit">Submit Review</button>
-      </form>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2026 HBNB. All rights reserved.</p>
-  </footer>
-
+    <script src="../style/scripts.js"></script>
 </body>
+
 </html>
