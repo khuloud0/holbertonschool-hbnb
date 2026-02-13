@@ -1,74 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Place Details</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBNB - Place Info</title>
+    <link rel="stylesheet" href="../style/styles.css">
 </head>
 
 <body>
+    <header>
+        <img src="../style/images/logo.png" alt="HBNB Logo" class="brand-logo">
+        <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="login.html">Sign In</a>
+        </nav>
+    </header>
 
-  <!-- Header -->
-  <header>
-    <img src="images/logo.png" class="logo" alt="Logo">
-    <a href="login.html" class="login-button">Login</a>
-  </header>
+    <main>
+        <section class="place-info">
+            <!-- Dynamic place details will load here -->
+        </section>
+        <section class="reviews-section">
+            <h2>Guest Reviews</h2>
+            <!-- Dynamic reviews will load here -->
+        </section>
+    </main>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="login.html">Login</a>
-  </nav>
+    <footer class="footer">
+        <p>&copy; 2026 HBNB. All rights reserved.</p>
+    </footer>
 
-  <!-- Main Content -->
-  <main>
-
-    <!-- Place Details -->
-    <section id="place-details" class="place-card">
-      <h1>Cozy Apartment</h1>
-      <p><strong>Host:</strong> John Doe</p>
-      <p><strong>Price per night:</strong> $120</p>
-      <p><strong>Description:</strong> A cozy apartment located in the city center.</p>
-
-      <div class="place-info">
-        <p><strong>Amenities:</strong></p>
-        <ul>
-          <li>WiFi</li>
-          <li>Air Conditioning</li>
-          <li>Kitchen</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Reviews -->
-    <section id="reviews">
-      <h2>Reviews</h2>
-
-      <div class="review-card">
-        <p><strong>User:</strong> Sarah</p>
-        <p>★★★★★</p>
-        <p>Great place, very clean!</p>
-      </div>
-
-      <div class="review-card">
-        <p><strong>User:</strong> Ahmed</p>
-        <p>★★★★☆</p>
-        <p>Nice location and friendly host.</p>
-      </div>
-    </section>
-
-    <!-- Add Review Button -->
-    <section>
-      <a href="add_review.html" class="details-button">Add Review</a>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2026 HBNB. All rights reserved.</p>
-  </footer>
-
+    <script src="../style/scripts.js"></script>
 </body>
+
 </html>
