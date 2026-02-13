@@ -4,37 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="icon" type="image/png" href="images/icon.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/icon.png">
 </head>
 <body>
+
+    <!-- Header -->
+    <header>
+        <img src="images/logo.png" alt="HBNB Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html" class="login-button">Login</a>
+        </nav>
+    </header>
+
+    <!-- Main -->
     <main class="login_page">
         <div class="login_form">
+
             <div class="form_top">
                 <div class="form_text">
                     <h1>Welcome to the Hbnb Website</h1>
-                    <p>You can reserve an accommodation for a certain period, for your vacations, personal or business trips, etc.</p>
+                    <p>
+                        You can reserve an accommodation for a certain period,
+                        for your vacations, personal or business trips, etc.
+                    </p>
                 </div>
             </div>
+
             <form id="login-form">
                 <h2>Login</h2>
+
+                <!-- Error message -->
+                <p id="login-error"></p>
+
                 <label for="email">Email:</label>
                 <div class="input-container">
                     <i class="fa fa-user"></i>
-                    <input type="text" id="email" name="email" placeholder="Email" required>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Email"
+                        required
+                    >
                 </div>
 
                 <label for="password">Password:</label>
                 <div class="input-container">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                    >
                 </div>
-                
+
                 <button type="submit">Login</button>
             </form>
+
         </div>
     </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>All rights reserved</p>
+    </footer>
+
+    <!-- ✅ IMPORTANT: Scripts -->
     <script src="scripts.js"></script>
+
 </body>
 </html>
