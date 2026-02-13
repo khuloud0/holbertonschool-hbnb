@@ -3,6 +3,7 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_restx import Api
+from flask_cors import CORS   # 👈 أضفنا CORS هنا
 
 from config import DevelopmentConfig
 from app.db import db
@@ -31,6 +32,9 @@ def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    # 👇 هذا هو الحل الأساسي للمشكلة
+    CORS(app)
+
     # Initialize extensions
     bcrypt.init_app(app)
     jwt.init_app(app)
@@ -44,8 +48,8 @@ def create_app(config_class=DevelopmentConfig):
         title="HBnB API",
         version="1.0",
         description="HBnB Application API",
-        authorizations=authorizations,  # 👈 هذا الجديد
-        security='Bearer'               # 👈 وهذا بعد
+        authorizations=authorizations,
+        security='Bearer'
     )
 
     # Register namespaces
