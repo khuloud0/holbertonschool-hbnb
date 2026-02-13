@@ -8,7 +8,7 @@ from flask_cors import CORS
 from config import DevelopmentConfig
 from app.db import db
 
-# 👇 مهم جداً استيراد المودلز هنا عشان create_all ينشئ الجداول
+# مهم جداً استيراد المودلز عشان create_all ينشئ الجداول
 from app.models.user import User
 from app.models.place import Place
 from app.models.review import Review
@@ -24,7 +24,7 @@ from app.api.v1.reviews import api as reviews_ns
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
-# JWT Bearer definition for Swagger
+# Swagger JWT Authorizations
 authorizations = {
     'Bearer': {
         'type': 'apiKey',
@@ -37,6 +37,10 @@ authorizations = {
 
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
+
+    # ✅ حل مشكلة 308 (trailing slash)
+    app.url_map.strict_slashes = False
+
     app.config.from_object(config_class)
 
     # ✅ حل مشكلة CORS بين Part4 و Part3
@@ -47,7 +51,7 @@ def create_app(config_class=DevelopmentConfig):
     jwt.init_app(app)
     db.init_app(app)
 
-    # ✅ إنشاء الجداول
+    # إنشاء الجداول
     with app.app_context():
         db.create_all()
 
