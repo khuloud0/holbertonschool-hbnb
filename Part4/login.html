@@ -1,50 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>HBnB • Login</title>
-    <link rel="icon" href="images/icon.png">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/icon.png" />
 </head>
 <body>
-    <header>
-        <a class="logo" href="index.html">
-            <img src="https://github.com/Holberton-Uy/hbnb-doc/blob/main/part4/base_files/images/logo.png?raw=true" alt="HBnB logo">
-            <span>HBnB</span>
-        </a>
-        <nav>
-            <a href="index.html">Home</a>
-            <a class="login-button" href="login.html">Login</a>
-        </nav>
-    </header>
+    <main class="login_page">
+        <div class="login_form">
+            <div class="form_top">
+                <div class="form_text">
+                    <h1>Welcome to the Hbnb Website</h1>
+                    <p>You can reserve an accommodation for a certain period, for your vacations, personal or business trips, etc.</p>
+                </div>
+            </div>
+            <form id="login-form">
+                <h2>Login</h2>
+                <label for="email">Email:</label>
+                <div class="input-container">
+                    <i class="fa fa-user"></i>
+                    <input type="text" id="email" name="email" placeholder="Email" required>
+                </div>
 
-    <main>
-        <section class="add-review">
-            <h1>🔐 Welcome Back!</h1>
-            <p style="text-align: center; margin-bottom: 2rem;">Sign in to access your account and start exploring amazing places.</p>
-            <form id="login-form" class="form" novalidate>
-                <label>
-                    📧 Email Address
-                    <input id="email" type="email" name="email" placeholder="your@email.com" required>
-                </label>
-                <label>
-                    🔑 Password
-                    <input id="password" type="password" name="password" placeholder="Enter your password" required minlength="6">
-                </label>
-                <input type="submit" value="Sign In →">
-                <p id="login-error" class="error-message" style="display:none;"></p>
+                <label for="password">Password:</label>
+                <div class="input-container">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                
+                <button type="submit">Login</button>
             </form>
-            <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted);">
-                Test Account: <strong style="color: var(--primary-light);">admin@hbnb.com</strong> / <strong style="color: var(--primary-light);">admin123</strong>
-            </p>
-        </section>
+        </div>
     </main>
-
-    <footer>
-        <p>© 2026 HBnB - Find Your Perfect Stay</p>
-    </footer>
-
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
