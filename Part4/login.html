@@ -1,53 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBNB - User Login</title>
+    <link rel="stylesheet" href="../style/styles.css">
 </head>
 
 <body>
+    <header>
+        <img src="../style/images/logo.png" alt="HBNB Logo" class="brand-logo">
+        <nav class="navigation">
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
 
-  <!-- Header -->
-  <header>
-    <img src="images/logo.png" class="logo" alt="Logo">
-    <a href="login.html" class="login-button">Login</a>
-  </header>
+    <main>
+        <section class="login-section">
+            <h2>Welcome Back</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+            </form>
+        </section>
+    </main>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="login.html">Login</a>
-  </nav>
+    <footer class="footer">
+        <p>&copy; 2026 HBNB. All rights reserved.</p>
+    </footer>
 
-  <!-- Main Content -->
-  <main>
-    <section>
-      <h1>Login</h1>
-
-      <!-- Error message -->
-      <p id="login-error"></p>
-
-      <form id="login-form">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Login</button>
-      </form>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2026 HBNB. All rights reserved.</p>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="scripts.js"></script>
-
+    <script src="../style/scripts.js"></script>
 </body>
+
 </html>
