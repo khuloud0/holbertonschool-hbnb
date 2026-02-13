@@ -3,10 +3,16 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_restx import Api
-from flask_cors import CORS   # 👈 أضفنا CORS هنا
+from flask_cors import CORS
 
 from config import DevelopmentConfig
 from app.db import db
+
+# 👇 مهم جداً استيراد المودلز هنا عشان create_all ينشئ الجداول
+from app.models.user import User
+from app.models.place import Place
+from app.models.review import Review
+from app.models.amenity import Amenity
 
 from app.api.v1.users import api as users_ns
 from app.api.v1.auth import api as auth_ns
@@ -14,10 +20,11 @@ from app.api.v1.amenities import api as amenities_ns
 from app.api.v1.places import api as places_ns
 from app.api.v1.reviews import api as reviews_ns
 
+
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
-# 🔐 تعريف JWT Bearer لـ Swagger
+# JWT Bearer definition for Swagger
 authorizations = {
     'Bearer': {
         'type': 'apiKey',
@@ -32,7 +39,7 @@ def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # 👇 هذا هو الحل الأساسي للمشكلة
+    # ✅ حل مشكلة CORS بين Part4 و Part3
     CORS(app)
 
     # Initialize extensions
@@ -40,6 +47,7 @@ def create_app(config_class=DevelopmentConfig):
     jwt.init_app(app)
     db.init_app(app)
 
+    # ✅ إنشاء الجداول
     with app.app_context():
         db.create_all()
 
