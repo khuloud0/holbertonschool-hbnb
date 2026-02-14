@@ -184,6 +184,15 @@ async function fetchPlaceDetails() {
       return;
     }
 
+    // ✅ Generate Amenities list safely
+    let amenitiesList = "No amenities";
+
+    if (place.amenities && place.amenities.length > 0) {
+      amenitiesList = place.amenities
+        .map(a => a.name)
+        .join(", ");
+    }
+
     container.innerHTML = `
       <h1>${place.name}</h1>
       <p><strong>Description:</strong> ${place.description}</p>
@@ -194,7 +203,7 @@ async function fetchPlaceDetails() {
       <p><strong>Latitude:</strong> ${place.latitude}</p>
       <p><strong>Longitude:</strong> ${place.longitude}</p>
       <p><strong>Amenities:</strong> ${amenitiesList}</p>
-`;
+    `;
 
   } catch (error) {
     container.innerHTML = "<p>Error loading place.</p>";
@@ -203,7 +212,7 @@ async function fetchPlaceDetails() {
 
 
 /* =========================
-   AUTH UI (Login / Logout + Hide Review)
+   AUTH UI
 ========================= */
 
 function updateAuthUI() {
@@ -233,7 +242,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateAuthUI();
 
-  // LOGIN PAGE
+  if (document.getElementById("places-list")) {
+    fetchPlaces();
+    setupPriceFilter();
+  }
+
+  if (document.getElementById("place-details")) {
+    fetchPlaceDetails();
+  }
+
   const loginForm = document.getElementById("login-form");
 
   if (loginForm) {
@@ -253,18 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // INDEX PAGE
-  if (document.getElementById("places-list")) {
-    fetchPlaces();
-    setupPriceFilter();
-  }
-
-  // PLACE DETAILS PAGE
-  if (document.getElementById("place-details")) {
-    fetchPlaceDetails();
-  }
-
-  // LOGOUT
   const logoutLink = document.getElementById("logout-link");
 
   if (logoutLink) {
