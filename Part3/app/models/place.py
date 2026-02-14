@@ -18,7 +18,6 @@ class Place(BaseModel):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1024))
     price = db.Column(db.Float, nullable=False)
-
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
 
@@ -34,12 +33,6 @@ class Place(BaseModel):
     # ======================
     # Relationships
     # ======================
-
-    owner = db.relationship(
-        "User",
-        backref="places",
-        lazy=True
-    )
 
     reviews = db.relationship(
         "Review",
@@ -79,13 +72,6 @@ class Place(BaseModel):
             "city": self.city,
             "country": self.country,
             "average_rating": round(avg_rating, 1),
-
-            # 👇 Owner info
-            "owner": {
-                "id": self.owner.id,
-                "first_name": self.owner.first_name,
-                "last_name": self.owner.last_name
-            } if self.owner else None,
 
             # 👇 Amenities list
             "amenities": [
