@@ -186,10 +186,14 @@ async function fetchPlaceDetails() {
 
     container.innerHTML = `
       <h1>${place.name}</h1>
-      <p>${place.description}</p>
-      <p>${place.city}, ${place.country}</p>
-      <p>$${place.price_per_night}/night</p>
-    `;
+      <p><strong>Description:</strong> ${place.description}</p>
+      <p><strong>City:</strong> ${place.city}</p>
+      <p><strong>Country:</strong> ${place.country}</p>
+      <p><strong>Price per night:</strong> $${place.price_per_night}</p>
+      <p><strong>Rating:</strong> ${place.average_rating || 0}</p>
+      <p><strong>Latitude:</strong> ${place.latitude}</p>
+      <p><strong>Longitude:</strong> ${place.longitude}</p>
+`;
 
   } catch (error) {
     container.innerHTML = "<p>Error loading place.</p>";
