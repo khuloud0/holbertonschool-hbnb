@@ -193,6 +193,7 @@ async function fetchPlaceDetails() {
       <p><strong>Rating:</strong> ${place.average_rating || 0}</p>
       <p><strong>Latitude:</strong> ${place.latitude}</p>
       <p><strong>Longitude:</strong> ${place.longitude}</p>
+      <p><strong>Amenities:</strong> ${amenitiesList}</p>
 `;
 
   } catch (error) {
