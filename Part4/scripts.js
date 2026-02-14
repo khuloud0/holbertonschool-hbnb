@@ -16,7 +16,7 @@ function getCookie(name) {
 }
 
 function setAuthToken(token) {
-  const maxAge = 4 * 60 * 60; // 4 hours
+  const maxAge = 4 * 60 * 60;
   document.cookie = `token=${token}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
 }
 
@@ -33,7 +33,6 @@ function displayError(message) {
   if (errorElement) {
     errorElement.textContent = message;
     errorElement.style.display = "block";
-    errorElement.style.color = "red";
   }
 }
 
@@ -46,43 +45,28 @@ function clearError() {
 }
 
 /* =========================
-   LOGIN FUNCTION
+   LOGIN
 ========================= */
 
 async function loginUser(email, password) {
   try {
     const response = await fetch(LOGIN_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
 
-    // نحاول نقرأ JSON لو موجود
-    let data = null;
-    try {
-      data = await response.json();
-    } catch (e) {
-      data = null;
-    }
+    const data = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || !data.access_token) {
       displayError("Invalid email or password");
       return;
     }
 
-    if (!data || !data.access_token) {
-      displayError("Login failed. No token received.");
-      return;
-    }
-
     setAuthToken(data.access_token);
-
     window.location.href = "index.html";
 
   } catch (error) {
-    console.error(error);
     displayError("Network error. Please try again.");
   }
 }
@@ -99,13 +83,13 @@ async function fetchPlaces() {
 
   try {
     const response = await fetch(`${API_BASE_URL}/places`);
+    const places = await response.json();
 
     if (!response.ok) {
       container.innerHTML = "<p>Failed to load places.</p>";
       return;
     }
 
-    const places = await response.json();
     displayPlaces(places);
 
   } catch (error) {
@@ -117,7 +101,7 @@ function displayPlaces(places) {
   const container = document.getElementById("places-list");
   container.innerHTML = "";
 
-  if (!places || places.length === 0) {
+  if (!places.length) {
     container.innerHTML = "<p>No places available.</p>";
     return;
   }
@@ -162,28 +146,6 @@ function setupPriceFilter() {
         card.style.display = "block";
       } else {
         card.style.display = "none";
-    
-    const submitBtn = reviewForm.querySelector('button[type="submit"]');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-    
-    try {
-      const response = await fetch(`${API_BASE_URL}/reviews/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          place_id: placeId,
-          rating: parseInt(rating),
-          text: text
-        })
-      });
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Failed to submit review');
       }
     });
   });
@@ -209,13 +171,12 @@ async function fetchPlaceDetails() {
 
   try {
     const response = await fetch(`${API_BASE_URL}/places/${placeId}`);
+    const place = await response.json();
 
     if (!response.ok) {
       container.innerHTML = "<p>Place not found.</p>";
       return;
     }
-
-    const place = await response.json();
 
     container.innerHTML = `
       <h1>${place.name}</h1>
@@ -235,12 +196,15 @@ async function fetchPlaceDetails() {
 
 function updateAuthUI() {
   const loginLink = document.getElementById("login-link");
-  if (!loginLink) return;
+  const logoutLink = document.getElementById("logout-link");
+  const token = getCookie("token");
 
-  if (getCookie("token")) {
-    loginLink.style.display = "none";
+  if (token) {
+    if (loginLink) loginLink.style.display = "none";
+    if (logoutLink) logoutLink.style.display = "inline";
   } else {
-    loginLink.style.display = "inline";
+    if (loginLink) loginLink.style.display = "inline";
+    if (logoutLink) logoutLink.style.display = "none";
   }
 }
 
@@ -250,7 +214,6 @@ function updateAuthUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // LOGIN PAGE
   const loginForm = document.getElementById("login-form");
 
   if (loginForm) {
@@ -270,34 +233,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // INDEX PAGE
   if (document.getElementById("places-list")) {
     updateAuthUI();
     fetchPlaces();
     setupPriceFilter();
   }
 
-  // PLACE DETAILS PAGE
   if (document.getElementById("place-details")) {
     updateAuthUI();
     fetchPlaceDetails();
   }
-  /* ----------  ADD REVIEW PAGE ---------- */
-  if (currentPage === 'add_review.html') {
-    const token = getCookie('token');
-    if (!token) {
-      window.location.href = 'index.html';
-      return;
-    }
 
-    const placeId = getPlaceIdFromURL();
-    if (!placeId) {
-      window.location.href = 'index.html';
-      return;
-    }
+  const logoutLink = document.getElementById("logout-link");
 
-    setupReviewForm(placeId, token);
-
+  if (logoutLink) {
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      deleteCookie("token");
+      window.location.href = "login.html";
+    });
   }
 
 });
