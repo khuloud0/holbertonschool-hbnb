@@ -162,6 +162,28 @@ function setupPriceFilter() {
         card.style.display = "block";
       } else {
         card.style.display = "none";
+    
+    const submitBtn = reviewForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          place_id: placeId,
+          rating: parseInt(rating),
+          text: text
+        })
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to submit review');
       }
     });
   });
@@ -259,6 +281,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("place-details")) {
     updateAuthUI();
     fetchPlaceDetails();
+  }
+  /* ----------  ADD REVIEW PAGE ---------- */
+  if (currentPage === 'add_review.html') {
+    const token = getCookie('token');
+    if (!token) {
+      window.location.href = 'index.html';
+      return;
+    }
+
+    const placeId = getPlaceIdFromURL();
+    if (!placeId) {
+      window.location.href = 'index.html';
+      return;
+    }
+
+    setupReviewForm(placeId, token);
+
   }
 
 });

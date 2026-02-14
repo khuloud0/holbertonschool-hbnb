@@ -16,6 +16,30 @@
       <a href="login.html" class="login-button">Login</a>
     </nav>
   </header>
+    <main>
+        <section class="review-section">
+            <h2>Share Your Experience</h2>
+            <form id="review-form">
+                <div class="input-group">
+                    <label for="rating">Your Rating</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Choose a rating</option>
+                        <option value="1">⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="text">Your Review</label>
+                    <textarea id="review-text" name="text" required minlength="10"
+                        placeholder="Tell us about your stay..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </section>
+    </main>
 
   <main>
 
