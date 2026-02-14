@@ -168,7 +168,7 @@ function setupPriceFilter() {
     submitBtn.textContent = 'Submitting...';
     
     try {
-      const response = await fetch(`${API_BASE_URL}/reviews`, {
+      const response = await fetch(`${API_BASE_URL}/reviews/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
