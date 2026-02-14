@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBNB - Submit Your Review</title>
-    <link rel="stylesheet" href="../style/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Review</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <header>
-        <img src="../style/images/logo.png" alt="HBNB Logo" class="brand-logo">
-        <nav class="navigation">
-            <a href="index.html">Home</a>
-            <a href="login.html">Sign In</a>
-        </nav>
-    </header>
 
-    <main>
-        <section class="review-section">
-            <h2>Share Your Experience</h2>
-            <form id="reviewForm">
-                <div class="input-group">
-                    <label for="rating">Your Rating</label>
-                    <select id="rating" name="rating" required>
-                        <option value="">Choose a rating</option>
-                        <option value="1">⭐</option>
-                        <option value="2">⭐⭐</option>
-                        <option value="3">⭐⭐⭐</option>
-                        <option value="4">⭐⭐⭐⭐</option>
-                        <option value="5">⭐⭐⭐⭐⭐</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="text">Your Review</label>
-                    <textarea id="text" name="text" required minlength="10"
-                        placeholder="Tell us about your stay..."></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Submit</button>
-            </form>
-        </section>
-    </main>
+  <!-- Header -->
+  <header>
+    <img src="images/logo.png" class="logo" alt="HBnB Logo">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html" class="login-button">Login</a>
+    </nav>
+  </header>
 
-    <footer class="footer">
-        <p>&copy; 2026 HBNB. All rights reserved.</p>
-    </footer>
+  <main>
 
-    <script src="../style/scripts.js"></script>
+    <!-- Add Review Form -->
+    <form id="review-form">
+      <h2>Add a Review</h2>
+
+      <label for="review">Your Review:</label>
+      <textarea id="review" name="review" required></textarea>
+
+      <label for="rating">Rating:</label>
+      <select id="rating" name="rating" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <button type="submit">Submit Review</button>
+    </form>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 HBNB. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts.js"></script>
 </body>
-
 </html>
