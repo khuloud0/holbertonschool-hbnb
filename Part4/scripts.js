@@ -25,26 +25,6 @@ function deleteCookie(name) {
 }
 
 /* =========================
-   ERROR HANDLING
-========================= */
-
-function displayError(message) {
-  const errorElement = document.getElementById("login-error");
-  if (errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = "block";
-  }
-}
-
-function clearError() {
-  const errorElement = document.getElementById("login-error");
-  if (errorElement) {
-    errorElement.textContent = "";
-    errorElement.style.display = "none";
-  }
-}
-
-/* =========================
    LOGIN
 ========================= */
 
@@ -59,7 +39,7 @@ async function loginUser(email, password) {
     const data = await response.json();
 
     if (!response.ok || !data.access_token) {
-      displayError("Invalid email or password");
+      alert("Invalid email or password");
       return;
     }
 
@@ -67,12 +47,12 @@ async function loginUser(email, password) {
     window.location.href = "index.html";
 
   } catch (error) {
-    displayError("Network error. Please try again.");
+    alert("Network error. Please try again.");
   }
 }
 
 /* =========================
-   FETCH PLACES
+   FETCH PLACES (INDEX)
 ========================= */
 
 async function fetchPlaces() {
@@ -109,7 +89,6 @@ function displayPlaces(places) {
   places.forEach(place => {
     const card = document.createElement("div");
     card.className = "place-card";
-    card.dataset.price = place.price_per_night;
 
     card.innerHTML = `
       <h3>${place.name}</h3>
@@ -125,30 +104,6 @@ function displayPlaces(places) {
 
 function goToDetails(id) {
   window.location.href = `place.html?id=${id}`;
-}
-
-/* =========================
-   PRICE FILTER
-========================= */
-
-function setupPriceFilter() {
-  const filter = document.getElementById("price-filter");
-  if (!filter) return;
-
-  filter.addEventListener("change", (e) => {
-    const maxPrice = e.target.value;
-    const cards = document.querySelectorAll(".place-card");
-
-    cards.forEach(card => {
-      const price = parseFloat(card.dataset.price);
-
-      if (maxPrice === "all" || price <= parseFloat(maxPrice)) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  });
 }
 
 /* =========================
@@ -178,11 +133,44 @@ async function fetchPlaceDetails() {
       return;
     }
 
+    /* ===== Amenities ===== */
+    let amenitiesHTML = "<p>No amenities available.</p>";
+
+    if (place.amenities && place.amenities.length > 0) {
+      amenitiesHTML = `
+        <ul>
+          ${place.amenities.map(a => `<li>${a.name}</li>`).join("")}
+        </ul>
+      `;
+    }
+
+    /* ===== Reviews ===== */
+    let reviewsHTML = "<p>No reviews yet.</p>";
+
+    if (place.reviews && place.reviews.length > 0) {
+      reviewsHTML = `
+        <ul>
+          ${place.reviews.map(r => `
+            <li>
+              ⭐ ${r.rating} - ${r.text}
+            </li>
+          `).join("")}
+        </ul>
+      `;
+    }
+
+    /* ===== Final Render ===== */
     container.innerHTML = `
       <h1>${place.name}</h1>
       <p>${place.description}</p>
       <p>${place.city}, ${place.country}</p>
       <p>$${place.price_per_night}/night</p>
+
+      <h3>Amenities:</h3>
+      ${amenitiesHTML}
+
+      <h3>Reviews:</h3>
+      ${reviewsHTML}
     `;
 
   } catch (error) {
@@ -214,33 +202,13 @@ function updateAuthUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const loginForm = document.getElementById("login-form");
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      clearError();
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        displayError("Please enter email and password");
-        return;
-      }
-
-      loginUser(email, password);
-    });
-  }
+  updateAuthUI();
 
   if (document.getElementById("places-list")) {
-    updateAuthUI();
     fetchPlaces();
-    setupPriceFilter();
   }
 
   if (document.getElementById("place-details")) {
-    updateAuthUI();
     fetchPlaceDetails();
   }
 
