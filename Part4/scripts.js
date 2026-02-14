@@ -16,32 +16,12 @@ function getCookie(name) {
 }
 
 function setAuthToken(token) {
-  const maxAge = 4 * 60 * 60;
+  const maxAge = 4 * 60 * 60; // 4 hours
   document.cookie = `token=${token}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
 }
 
 function deleteCookie(name) {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-}
-
-/* =========================
-   ERROR HANDLING
-========================= */
-
-function displayError(message) {
-  const errorElement = document.getElementById("login-error");
-  if (errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = "block";
-  }
-}
-
-function clearError() {
-  const errorElement = document.getElementById("login-error");
-  if (errorElement) {
-    errorElement.textContent = "";
-    errorElement.style.display = "none";
-  }
 }
 
 /* =========================
@@ -59,7 +39,7 @@ async function loginUser(email, password) {
     const data = await response.json();
 
     if (!response.ok || !data.access_token) {
-      displayError("Invalid email or password");
+      alert("Invalid email or password");
       return;
     }
 
@@ -67,7 +47,7 @@ async function loginUser(email, password) {
     window.location.href = "index.html";
 
   } catch (error) {
-    displayError("Network error. Please try again.");
+    alert("Network error. Please try again.");
   }
 }
 
@@ -128,30 +108,6 @@ function goToDetails(id) {
 }
 
 /* =========================
-   PRICE FILTER
-========================= */
-
-function setupPriceFilter() {
-  const filter = document.getElementById("price-filter");
-  if (!filter) return;
-
-  filter.addEventListener("change", (e) => {
-    const maxPrice = e.target.value;
-    const cards = document.querySelectorAll(".place-card");
-
-    cards.forEach(card => {
-      const price = parseFloat(card.dataset.price);
-
-      if (maxPrice === "all" || price <= parseFloat(maxPrice)) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  });
-}
-
-/* =========================
    PLACE DETAILS
 ========================= */
 
@@ -178,11 +134,23 @@ async function fetchPlaceDetails() {
       return;
     }
 
+    // Amenities render
+    let amenitiesHTML = "";
+    if (place.amenities && place.amenities.length > 0) {
+      amenitiesHTML = `
+        <h3>Amenities:</h3>
+        <ul>
+          ${place.amenities.map(a => `<li>${a.name}</li>`).join("")}
+        </ul>
+      `;
+    }
+
     container.innerHTML = `
       <h1>${place.name}</h1>
       <p>${place.description}</p>
       <p>${place.city}, ${place.country}</p>
       <p>$${place.price_per_night}/night</p>
+      ${amenitiesHTML}
     `;
 
   } catch (error) {
@@ -197,14 +165,17 @@ async function fetchPlaceDetails() {
 function updateAuthUI() {
   const loginLink = document.getElementById("login-link");
   const logoutLink = document.getElementById("logout-link");
+  const reviewSection = document.getElementById("add-review");
   const token = getCookie("token");
 
   if (token) {
     if (loginLink) loginLink.style.display = "none";
     if (logoutLink) logoutLink.style.display = "inline";
+    if (reviewSection) reviewSection.style.display = "block";
   } else {
     if (loginLink) loginLink.style.display = "inline";
     if (logoutLink) logoutLink.style.display = "none";
+    if (reviewSection) reviewSection.style.display = "none";
   }
 }
 
@@ -214,38 +185,27 @@ function updateAuthUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const loginForm = document.getElementById("login-form");
+  updateAuthUI();
 
+  const loginForm = document.getElementById("login-form");
   if (loginForm) {
     loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      clearError();
-
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        displayError("Please enter email and password");
-        return;
-      }
-
       loginUser(email, password);
     });
   }
 
   if (document.getElementById("places-list")) {
-    updateAuthUI();
     fetchPlaces();
-    setupPriceFilter();
   }
 
   if (document.getElementById("place-details")) {
-    updateAuthUI();
     fetchPlaceDetails();
   }
 
   const logoutLink = document.getElementById("logout-link");
-
   if (logoutLink) {
     logoutLink.addEventListener("click", (e) => {
       e.preventDefault();
