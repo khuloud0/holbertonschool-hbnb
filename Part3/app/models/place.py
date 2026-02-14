@@ -18,6 +18,10 @@ class Place(BaseModel):
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
 
+    # 👇 الجديد
+    city = db.Column(db.String(100), nullable=False)
+    country = db.Column(db.String(100), nullable=False)
+
     # ===== Foreign Keys =====
     owner_id = db.Column(
         db.String(60),
@@ -44,15 +48,21 @@ class Place(BaseModel):
         """Dictionary representation for frontend"""
         data = super().to_dict()
 
+        # حساب التقييم المتوسط
+        if self.reviews:
+            avg_rating = sum(r.rating for r in self.reviews) / len(self.reviews)
+        else:
+            avg_rating = 0
+
         data.update({
             "name": self.title,
             "description": self.description,
             "price_per_night": self.price,
             "latitude": self.latitude,
             "longitude": self.longitude,
-            "city": "Unknown",
-            "country": "Unknown",
-            "average_rating": 0
+            "city": self.city,
+            "country": self.country,
+            "average_rating": round(avg_rating, 1)
         })
 
         return data
