@@ -11,29 +11,34 @@ class Place(BaseModel):
 
     __tablename__ = "places"
 
-    # ===== Columns =====
+    # ======================
+    # Columns
+    # ======================
+
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1024))
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
 
-    # 👇 الجديد
     city = db.Column(db.String(100), nullable=False)
     country = db.Column(db.String(100), nullable=False)
 
-    # ===== Foreign Keys =====
     owner_id = db.Column(
         db.String(60),
         db.ForeignKey("users.id"),
         nullable=False
     )
 
-    # ===== Relationships =====
+    # ======================
+    # Relationships
+    # ======================
+
     reviews = db.relationship(
         "Review",
         backref="place",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
+        lazy=True
     )
 
     amenities = db.relationship(
@@ -43,14 +48,18 @@ class Place(BaseModel):
         lazy="subquery"
     )
 
-    # ===== Serialization =====
+    # ======================
+    # Serialization
+    # ======================
+
     def to_dict(self):
         """Dictionary representation for frontend"""
+
         data = super().to_dict()
 
-        # حساب التقييم المتوسط
+        # Calculate average rating
         if self.reviews:
-            avg_rating = sum(r.rating for r in self.reviews) / len(self.reviews)
+            avg_rating = sum(review.rating for review in self.reviews) / len(self.reviews)
         else:
             avg_rating = 0
 
@@ -62,7 +71,16 @@ class Place(BaseModel):
             "longitude": self.longitude,
             "city": self.city,
             "country": self.country,
-            "average_rating": round(avg_rating, 1)
+            "average_rating": round(avg_rating, 1),
+
+            # 👇 Amenities list
+            "amenities": [
+                {
+                    "id": amenity.id,
+                    "name": amenity.name
+                }
+                for amenity in self.amenities
+            ]
         })
 
         return data
