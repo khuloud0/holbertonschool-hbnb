@@ -183,13 +183,14 @@ function updateAuthUI() {
 ========================= */
 
 async function submitReview(placeId, reviewText, rating, token) {
-  return fetch(`${API_BASE_URL}/places/${placeId}/reviews`, {
+  return fetch(`${API_BASE_URL}/reviews`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify({
+      place_id: placeId,
       text: reviewText,
       rating: parseInt(rating)
     })
@@ -240,6 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const reviewText = document.getElementById("review-text")?.value.trim();
       const rating = document.getElementById("rating")?.value;
 
+      if (!placeId) {
+        alert("Invalid place ID");
+        return;
+      }
+
       if (!reviewText || !rating) {
         alert("Please fill all fields");
         return;
@@ -252,7 +258,8 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Review submitted successfully!");
           reviewForm.reset();
         } else {
-          alert("Failed to submit review");
+          const errorData = await response.json();
+          alert(errorData.error || "Failed to submit review");
         }
 
       } catch (error) {
