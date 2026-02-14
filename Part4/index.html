@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Places</title>
+  <title>List of Places</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
   <!-- Header -->
@@ -15,8 +14,7 @@
 
     <nav>
       <a href="index.html">Home</a>
-      <a href="login.html" id="login-link">Login</a>
-      <a href="#" id="logout-link" style="display:none;">Logout</a>
+      <a href="login.html" class="login-button">Login</a>
     </nav>
   </header>
 
@@ -24,25 +22,28 @@
   <main>
 
     <!-- Filter Section -->
-    <section id="filters">
+    <section id="filter">
       <label for="price-filter">Max Price:</label>
-
       <select id="price-filter">
         <option value="all">All</option>
+        <option value="10">$10 or less</option>
         <option value="50">$50 or less</option>
         <option value="100">$100 or less</option>
-        <option value="200">$200 or less</option>
       </select>
+    </section>
 
+    <!-- Places List -->
+    <section id="places-list">
+      <!-- Places will be dynamically populated here by JavaScript -->
     </section>
 
   </main>
-  
-    <!-- Footer -->
+
+  <!-- Footer -->
   <footer>
     <p>© 2026 HBNB. All rights reserved.</p>
   </footer>
 
-
+  <script src="scripts.js"></script>
 </body>
 </html>
