@@ -3,7 +3,6 @@
 ========================= */
 
 const API_BASE_URL = "http://127.0.0.1:5000/api/v1";
-const LOGIN_URL = `${API_BASE_URL}/auth/login`;
 
 
 /* =========================
@@ -11,39 +10,23 @@ const LOGIN_URL = `${API_BASE_URL}/auth/login`;
 ========================= */
 
 function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(";").shift() : null;
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
 }
 
-function setAuthToken(token) {
-  const maxAge = 4 * 60 * 60; // 4 hours
-  document.cookie = `token=${token}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+function setCookie(name, value, days = 7) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
 }
 
 function deleteCookie(name) {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
 }
 
-
-/* =========================
-   ERROR HANDLING
-========================= */
-
-function displayError(message) {
-  const errorElement = document.getElementById("login-error");
-  if (errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = "block";
-  }
-}
-
-function clearError() {
-  const errorElement = document.getElementById("login-error");
-  if (errorElement) {
-    errorElement.textContent = "";
-    errorElement.style.display = "none";
-  }
+function checkAuthentication() {
+    return getCookie('token');
 }
 
 
@@ -52,185 +35,160 @@ function clearError() {
 ========================= */
 
 async function loginUser(email, password) {
-  try {
-    const response = await fetch(LOGIN_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
+    try {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (!response.ok || !data.access_token) {
-      displayError("Invalid email or password");
-      return;
+        if (!response.ok || !data.access_token) {
+            alert("Invalid email or password");
+            return;
+        }
+
+        setCookie('token', data.access_token);
+        window.location.href = "index.html";
+
+    } catch (error) {
+        alert("Network error");
     }
-
-    setAuthToken(data.access_token);
-    window.location.href = "index.html";
-
-  } catch (error) {
-    displayError("Network error. Please try again.");
-  }
 }
 
 
 /* =========================
-   FETCH PLACES (INDEX)
+   FETCH PLACES
 ========================= */
 
-async function fetchPlaces() {
-  const container = document.getElementById("places-list");
-  if (!container) return;
+async function fetchPlaces(token) {
+    const container = document.getElementById('places-list');
+    if (!container) return;
 
-  container.innerHTML = "<p>Loading...</p>";
+    container.innerHTML = "<p>Loading...</p>";
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/places`);
-    const places = await response.json();
+    try {
+        const headers = { 'Content-Type': 'application/json' };
 
-    if (!response.ok) {
-      container.innerHTML = "<p>Failed to load places.</p>";
-      return;
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(`${API_BASE_URL}/places`, {
+            method: 'GET',
+            headers: headers
+        });
+
+        const places = await response.json();
+
+        if (!response.ok) {
+            container.innerHTML = "<p>Failed to load places.</p>";
+            return;
+        }
+
+        displayPlaces(places);
+
+    } catch (error) {
+        container.innerHTML = "<p>Error loading places.</p>";
     }
-
-    displayPlaces(places);
-
-  } catch (error) {
-    container.innerHTML = "<p>Error loading places.</p>";
-  }
 }
+
 
 function displayPlaces(places) {
-  const container = document.getElementById("places-list");
-  container.innerHTML = "";
+    const container = document.getElementById('places-list');
+    container.innerHTML = "";
 
-  if (!places || places.length === 0) {
-    container.innerHTML = "<p>No places available.</p>";
-    return;
-  }
+    if (!places || places.length === 0) {
+        container.innerHTML = "<p>No places available.</p>";
+        return;
+    }
 
-  places.forEach(place => {
-    const card = document.createElement("div");
-    card.className = "place-card";
-    card.dataset.price = place.price_per_night;
+    places.forEach(place => {
+        const card = document.createElement('div');
+        card.className = 'place-card';
+        card.dataset.price = place.price_per_night;
 
-    card.innerHTML = `
-      <h3>${place.name}</h3>
-      <p>${place.description || ""}</p>
-      <p>${place.city}, ${place.country}</p>
-      <p>$${place.price_per_night}/night</p>
-      <button onclick="goToDetails('${place.id}')">View Details</button>
-    `;
+        card.innerHTML = `
+            <h3>${place.name}</h3>
+            <p>${place.description || ""}</p>
+            <p>${place.city}, ${place.country}</p>
+            <p>$${place.price_per_night}/night</p>
+            <button onclick="viewPlaceDetails('${place.id}')">
+                View Details
+            </button>
+        `;
 
-    container.appendChild(card);
-  });
-}
-
-function goToDetails(id) {
-  window.location.href = `place.html?id=${id}`;
-}
-
-
-/* =========================
-   PRICE FILTER
-========================= */
-
-function setupPriceFilter() {
-  const filter = document.getElementById("price-filter");
-  if (!filter) return;
-
-  filter.addEventListener("change", (e) => {
-    const maxPrice = e.target.value;
-    const cards = document.querySelectorAll(".place-card");
-
-    cards.forEach(card => {
-      const price = parseFloat(card.dataset.price);
-
-      if (maxPrice === "all" || price <= parseFloat(maxPrice)) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
+        container.appendChild(card);
     });
-  });
 }
 
 
 /* =========================
-   PLACE DETAILS
+   VIEW DETAILS
 ========================= */
+
+function viewPlaceDetails(placeId) {
+    window.location.href = `place.html?id=${placeId}`;
+}
 
 function getPlaceIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
-}
-
-async function fetchPlaceDetails() {
-  const placeId = getPlaceIdFromURL();
-  if (!placeId) return;
-
-  const container = document.getElementById("place-details");
-  if (!container) return;
-
-  container.innerHTML = "<p>Loading...</p>";
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/places/${placeId}`);
-    const place = await response.json();
-
-    if (!response.ok) {
-      container.innerHTML = "<p>Place not found.</p>";
-      return;
-    }
-
-    // ✅ Generate Amenities list safely
-    let amenitiesList = "No amenities";
-
-    if (place.amenities && place.amenities.length > 0) {
-      amenitiesList = place.amenities
-        .map(a => a.name)
-        .join(", ");
-    }
-
-    container.innerHTML = `
-      <h1>${place.name}</h1>
-      <p><strong>Description:</strong> ${place.description}</p>
-      <p><strong>City:</strong> ${place.city}</p>
-      <p><strong>Country:</strong> ${place.country}</p>
-      <p><strong>Price per night:</strong> $${place.price_per_night}</p>
-      <p><strong>Rating:</strong> ${place.average_rating || 0}</p>
-      <p><strong>Latitude:</strong> ${place.latitude}</p>
-      <p><strong>Longitude:</strong> ${place.longitude}</p>
-      <p><strong>Amenities:</strong> ${amenitiesList}</p>
-    `;
-
-  } catch (error) {
-    container.innerHTML = "<p>Error loading place.</p>";
-  }
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
 }
 
 
 /* =========================
-   AUTH UI
+   FETCH PLACE DETAILS
 ========================= */
 
-function updateAuthUI() {
-  const token = getCookie("token");
+async function fetchPlaceDetails(token, placeId) {
+    const container = document.getElementById('place-details');
+    if (!container) return;
 
-  const loginLink = document.getElementById("login-link");
-  const logoutLink = document.getElementById("logout-link");
-  const reviewSection = document.getElementById("add-review");
+    container.innerHTML = "<p>Loading...</p>";
 
-  if (token) {
-    if (loginLink) loginLink.style.display = "none";
-    if (logoutLink) logoutLink.style.display = "inline";
-    if (reviewSection) reviewSection.style.display = "block";
-  } else {
-    if (loginLink) loginLink.style.display = "inline";
-    if (logoutLink) logoutLink.style.display = "none";
-    if (reviewSection) reviewSection.style.display = "none";
-  }
+    try {
+        const headers = { 'Content-Type': 'application/json' };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(`${API_BASE_URL}/places/${placeId}`, {
+            method: 'GET',
+            headers: headers
+        });
+
+        const place = await response.json();
+
+        if (!response.ok) {
+            container.innerHTML = "<p>Place not found.</p>";
+            return;
+        }
+
+        // Amenities Fix 🔥
+        let amenitiesHTML = "No amenities";
+
+        if (place.amenities && place.amenities.length > 0) {
+            amenitiesHTML = place.amenities
+                .map(a => a.name)
+                .join(", ");
+        }
+
+        container.innerHTML = `
+            <h1>${place.name}</h1>
+            <p><strong>Description:</strong> ${place.description}</p>
+            <p><strong>City:</strong> ${place.city}</p>
+            <p><strong>Country:</strong> ${place.country}</p>
+            <p><strong>Price:</strong> $${place.price_per_night}</p>
+            <p><strong>Rating:</strong> ${place.average_rating || 0}</p>
+            <p><strong>Amenities:</strong> ${amenitiesHTML}</p>
+        `;
+
+    } catch (error) {
+        container.innerHTML = "<p>Error loading place.</p>";
+    }
 }
 
 
@@ -238,46 +196,32 @@ function updateAuthUI() {
    DOM READY
 ========================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-  updateAuthUI();
+    const token = checkAuthentication();
 
-  if (document.getElementById("places-list")) {
-    fetchPlaces();
-    setupPriceFilter();
-  }
+    // LOGIN PAGE
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            loginUser(email, password);
+        });
+    }
 
-  if (document.getElementById("place-details")) {
-    fetchPlaceDetails();
-  }
+    // INDEX PAGE
+    if (document.getElementById('places-list')) {
+        fetchPlaces(token);
+    }
 
-  const loginForm = document.getElementById("login-form");
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      clearError();
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        displayError("Please enter email and password");
-        return;
-      }
-
-      loginUser(email, password);
-    });
-  }
-
-  const logoutLink = document.getElementById("logout-link");
-
-  if (logoutLink) {
-    logoutLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      deleteCookie("token");
-      window.location.href = "login.html";
-    });
-  }
+    // PLACE DETAILS PAGE
+    if (document.getElementById('place-details')) {
+        const placeId = getPlaceIdFromURL();
+        if (placeId) {
+            fetchPlaceDetails(token, placeId);
+        }
+    }
 
 });
