@@ -38,3 +38,21 @@ class Place(BaseModel):
         backref="places",
         lazy="subquery"
     )
+
+    # ===== Serialization =====
+    def to_dict(self):
+        """Dictionary representation for frontend"""
+        data = super().to_dict()
+
+        data.update({
+            "name": self.title,
+            "description": self.description,
+            "price_per_night": self.price,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "city": "Unknown",
+            "country": "Unknown",
+            "average_rating": 0
+        })
+
+        return data
