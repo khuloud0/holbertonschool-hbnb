@@ -10,8 +10,8 @@
 }
 
 body {
-    background-color: #FAFAFA;
-    color: #2D2D2D;
+    background-color: #f4f4f4;
+    color: #333;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -19,13 +19,13 @@ body {
 
 /* Header */
 header {
-    background-color: #FFFFFF;
-    color: #2D2D2D;
+    background-color: #F7F7F7;
+    color: #333;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .logo {
@@ -39,7 +39,7 @@ nav {
 }
 
 nav a {
-    color: #2D2D2D;
+    color: #333;
     text-decoration: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -47,7 +47,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #F2F2F2;
+    background-color: #000000;
 }
 
 .login-button {
@@ -56,7 +56,7 @@ nav a:hover {
 }
 
 .login-button:hover {
-    background-color: #EAEAEA;
+    background-color: #aaaaaa;
 }
 
 /* Main content */
@@ -70,8 +70,8 @@ main {
 
 /* Footer */
 footer {
-    background-color: #FFFFFF;
-    color: #666;
+    background-color: #F7F7F7;
+    color: #333;
     text-align: center;
     padding: 1rem;
     margin-top: auto;
@@ -81,9 +81,9 @@ footer {
 #filter {
     margin-bottom: 2rem;
     padding: 1rem;
-    background-color: #FFFFFF;
+    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #filter label {
@@ -93,7 +93,7 @@ footer {
 
 #price-filter {
     padding: 0.5rem;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
 }
@@ -106,18 +106,18 @@ footer {
 }
 
 .place-card {
-    background-color: #FFFFFF;
-    border: 1px solid #EAEAEA;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 10px;
     padding: 10px;
     margin: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .place-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .place-card img {
@@ -129,25 +129,25 @@ footer {
 }
 
 .place-card h3 {
-    color: #1F2937;
+    color: #2c3e50;
     margin-bottom: 0.5rem;
 }
 
 .place-card p {
-    color: #6B7280;
+    color: #7f8c8d;
     margin-bottom: 0.5rem;
 }
 
 .place-card .price {
-    color: #FF385C;
+    color: #27ae60;
     font-weight: bold;
     font-size: 1.2rem;
     margin: 1rem 0;
 }
 
 .details-button {
-    background-color: #FF385C;
-    color: #FFFFFF;
+    background-color: #795548;
+    color: #fff;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 5px;
@@ -158,16 +158,16 @@ footer {
 }
 
 .details-button:hover {
-    background-color: #E31C5F;
+    background-color: #aaaaaa;
 }
 
 /* Place details */
 .place-details {
-    background-color: #FFFFFF;
+    background-color: #fff;
     border-radius: 10px;
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .place-info {
@@ -175,7 +175,7 @@ footer {
 }
 
 .place-info h1 {
-    color: #1F2937;
+    color: #2c3e50;
     margin-bottom: 1rem;
 }
 
@@ -185,92 +185,132 @@ footer {
 }
 
 .place-info .price {
-    color: #FF385C;
+    color: #795548;
     font-weight: bold;
     font-size: 1.5rem;
     margin: 1rem 0;
 }
 
+.amenities-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
 .amenities-list li {
-    background-color: #F3F4F6;
+    background-color: #ecf0f1;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.9rem;
 }
 
 /* Reviews */
+#reviews {
+    margin-bottom: 2rem;
+}
+
 #reviews h2 {
-    color: #1F2937;
+    color: #2c3e50;
     margin-bottom: 1rem;
 }
 
 .review-card {
-    background-color: #FFFFFF;
-    border: 1px solid #EAEAEA;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 10px;
     padding: 10px;
     margin: 20px 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
+.review-card .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
 .review-card .reviewer-name {
     font-weight: bold;
-    color: #1F2937;
+    color: #2c3e50;
 }
 
 .review-card .rating {
-    color: #F59E0B;
+    color: #f39c12;
     font-weight: bold;
 }
 
 .review-card .review-text {
-    color: #6B7280;
+    color: #7f8c8d;
     line-height: 1.6;
 }
 
 /* Forms */
 .form, form {
-    background-color: #FFFFFF;
+    background-color: #fff;
     border-radius: 10px;
     padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     max-width: 500px;
     margin: 0 auto;
 }
 
 form h2 {
-    color: #1F2937;
+    color: #2c3e50;
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
 form label {
-    color: #1F2937;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
     font-weight: bold;
 }
 
 form input,
 form textarea,
 form select {
-    border: 1px solid #E0E0E0;
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+form textarea {
+    min-height: 150px;
+    resize: vertical;
 }
 
 form button {
-    background-color: #FF385C;
-    color: #FFFFFF;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #795548;
+    color: #fff;
     border: none;
     border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 form button:hover {
-    background-color: #E31C5F;
+    background-color: #aaaaaa;
 }
 
 /* Add review section */
+.add-review {
+    margin-top: 2rem;
+}
+
 .add-review h2 {
-    color: #1F2937;
+    color: #2c3e50;
+    margin-bottom: 1rem;
 }
 
 /* Responsive design */
@@ -292,3 +332,4 @@ form button:hover {
         padding: 1rem;
     }
 }
+ممكن بس تعطيني اقتراحات الوان بدون التغير أبدا أبدا على اي شي ثاني 
