@@ -25,7 +25,7 @@ function deleteCookie(name) {
 }
 
 /* =========================
-   ERROR DISPLAY
+   ERROR HANDLING
 ========================= */
 
 function displayError(message) {
@@ -33,6 +33,7 @@ function displayError(message) {
   if (errorElement) {
     errorElement.textContent = message;
     errorElement.style.display = "block";
+    errorElement.style.color = "red";
   }
 }
 
@@ -58,15 +59,21 @@ async function loginUser(email, password) {
       body: JSON.stringify({ email, password })
     });
 
-    const data = await response.json();
+    // نحاول نقرأ JSON لو موجود
+    let data = null;
+    try {
+      data = await response.json();
+    } catch (e) {
+      data = null;
+    }
 
     if (!response.ok) {
       displayError("Invalid email or password");
       return;
     }
 
-    if (!data.access_token) {
-      displayError("No token returned from server");
+    if (!data || !data.access_token) {
+      displayError("Login failed. No token received.");
       return;
     }
 
@@ -75,6 +82,7 @@ async function loginUser(email, password) {
     window.location.href = "index.html";
 
   } catch (error) {
+    console.error(error);
     displayError("Network error. Please try again.");
   }
 }
@@ -84,16 +92,16 @@ async function loginUser(email, password) {
 ========================= */
 
 async function fetchPlaces() {
-  const placesContainer = document.getElementById("places-list");
-  if (!placesContainer) return;
+  const container = document.getElementById("places-list");
+  if (!container) return;
 
-  placesContainer.innerHTML = "<p>Loading...</p>";
+  container.innerHTML = "<p>Loading...</p>";
 
   try {
     const response = await fetch(`${API_BASE_URL}/places`);
 
     if (!response.ok) {
-      placesContainer.innerHTML = "<p>Failed to load places.</p>";
+      container.innerHTML = "<p>Failed to load places.</p>";
       return;
     }
 
@@ -101,7 +109,7 @@ async function fetchPlaces() {
     displayPlaces(places);
 
   } catch (error) {
-    placesContainer.innerHTML = "<p>Error loading places.</p>";
+    container.innerHTML = "<p>Error loading places.</p>";
   }
 }
 
@@ -109,7 +117,7 @@ function displayPlaces(places) {
   const container = document.getElementById("places-list");
   container.innerHTML = "";
 
-  if (!places.length) {
+  if (!places || places.length === 0) {
     container.innerHTML = "<p>No places available.</p>";
     return;
   }
@@ -124,7 +132,7 @@ function displayPlaces(places) {
       <p>${place.description || ""}</p>
       <p>${place.city}, ${place.country}</p>
       <p>$${place.price_per_night}/night</p>
-      <button onclick="goToDetails(${place.id})">View Details</button>
+      <button onclick="goToDetails('${place.id}')">View Details</button>
     `;
 
     container.appendChild(card);
@@ -149,6 +157,7 @@ function setupPriceFilter() {
 
     cards.forEach(card => {
       const price = parseFloat(card.dataset.price);
+
       if (maxPrice === "all" || price <= parseFloat(maxPrice)) {
         card.style.display = "block";
       } else {
@@ -219,7 +228,7 @@ function updateAuthUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* LOGIN PAGE */
+  // LOGIN PAGE
   const loginForm = document.getElementById("login-form");
 
   if (loginForm) {
@@ -239,14 +248,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* INDEX PAGE */
+  // INDEX PAGE
   if (document.getElementById("places-list")) {
     updateAuthUI();
     fetchPlaces();
     setupPriceFilter();
   }
 
-  /* PLACE DETAILS PAGE */
+  // PLACE DETAILS PAGE
   if (document.getElementById("place-details")) {
     updateAuthUI();
     fetchPlaceDetails();
