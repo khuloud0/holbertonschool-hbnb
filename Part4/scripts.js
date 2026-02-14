@@ -5,6 +5,7 @@
 const API_BASE_URL = "http://127.0.0.1:5000/api/v1";
 const LOGIN_URL = `${API_BASE_URL}/auth/login`;
 
+
 /* =========================
    COOKIE HELPERS
 ========================= */
@@ -16,13 +17,14 @@ function getCookie(name) {
 }
 
 function setAuthToken(token) {
-  const maxAge = 4 * 60 * 60;
+  const maxAge = 4 * 60 * 60; // 4 hours
   document.cookie = `token=${token}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
 }
 
 function deleteCookie(name) {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
+
 
 /* =========================
    ERROR HANDLING
@@ -43,6 +45,7 @@ function clearError() {
     errorElement.style.display = "none";
   }
 }
+
 
 /* =========================
    LOGIN
@@ -71,8 +74,9 @@ async function loginUser(email, password) {
   }
 }
 
+
 /* =========================
-   FETCH PLACES
+   FETCH PLACES (INDEX)
 ========================= */
 
 async function fetchPlaces() {
@@ -101,7 +105,7 @@ function displayPlaces(places) {
   const container = document.getElementById("places-list");
   container.innerHTML = "";
 
-  if (!places.length) {
+  if (!places || places.length === 0) {
     container.innerHTML = "<p>No places available.</p>";
     return;
   }
@@ -127,6 +131,7 @@ function goToDetails(id) {
   window.location.href = `place.html?id=${id}`;
 }
 
+
 /* =========================
    PRICE FILTER
 ========================= */
@@ -150,6 +155,7 @@ function setupPriceFilter() {
     });
   });
 }
+
 
 /* =========================
    PLACE DETAILS
@@ -190,23 +196,29 @@ async function fetchPlaceDetails() {
   }
 }
 
+
 /* =========================
-   AUTH UI
+   AUTH UI (Login / Logout + Hide Review)
 ========================= */
 
 function updateAuthUI() {
+  const token = getCookie("token");
+
   const loginLink = document.getElementById("login-link");
   const logoutLink = document.getElementById("logout-link");
-  const token = getCookie("token");
+  const reviewSection = document.getElementById("add-review");
 
   if (token) {
     if (loginLink) loginLink.style.display = "none";
     if (logoutLink) logoutLink.style.display = "inline";
+    if (reviewSection) reviewSection.style.display = "block";
   } else {
     if (loginLink) loginLink.style.display = "inline";
     if (logoutLink) logoutLink.style.display = "none";
+    if (reviewSection) reviewSection.style.display = "none";
   }
 }
+
 
 /* =========================
    DOM READY
@@ -214,6 +226,9 @@ function updateAuthUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  updateAuthUI();
+
+  // LOGIN PAGE
   const loginForm = document.getElementById("login-form");
 
   if (loginForm) {
@@ -233,17 +248,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // INDEX PAGE
   if (document.getElementById("places-list")) {
-    updateAuthUI();
     fetchPlaces();
     setupPriceFilter();
   }
 
+  // PLACE DETAILS PAGE
   if (document.getElementById("place-details")) {
-    updateAuthUI();
     fetchPlaceDetails();
   }
 
+  // LOGOUT
   const logoutLink = document.getElementById("logout-link");
 
   if (logoutLink) {
