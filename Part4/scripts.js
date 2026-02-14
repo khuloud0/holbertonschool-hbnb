@@ -5,7 +5,6 @@
 const API_BASE_URL = "http://127.0.0.1:5000/api/v1";
 const LOGIN_URL = `${API_BASE_URL}/auth/login`;
 
-
 /* =========================
    COOKIE HELPERS
 ========================= */
@@ -17,14 +16,13 @@ function getCookie(name) {
 }
 
 function setAuthToken(token) {
-  const maxAge = 4 * 60 * 60; // 4 hours
+  const maxAge = 4 * 60 * 60;
   document.cookie = `token=${token}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
 }
 
 function deleteCookie(name) {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
-
 
 /* =========================
    ERROR HANDLING
@@ -45,7 +43,6 @@ function clearError() {
     errorElement.style.display = "none";
   }
 }
-
 
 /* =========================
    LOGIN
@@ -74,9 +71,8 @@ async function loginUser(email, password) {
   }
 }
 
-
 /* =========================
-   FETCH PLACES (INDEX)
+   FETCH PLACES
 ========================= */
 
 async function fetchPlaces() {
@@ -105,7 +101,7 @@ function displayPlaces(places) {
   const container = document.getElementById("places-list");
   container.innerHTML = "";
 
-  if (!places || places.length === 0) {
+  if (!places.length) {
     container.innerHTML = "<p>No places available.</p>";
     return;
   }
@@ -131,7 +127,6 @@ function goToDetails(id) {
   window.location.href = `place.html?id=${id}`;
 }
 
-
 /* =========================
    PRICE FILTER
 ========================= */
@@ -155,7 +150,6 @@ function setupPriceFilter() {
     });
   });
 }
-
 
 /* =========================
    PLACE DETAILS
@@ -184,23 +178,11 @@ async function fetchPlaceDetails() {
       return;
     }
 
-    // ✅ Generate Amenities list safely
-    let amenitiesList = "No amenities";
-
-    if (place.amenities && place.amenities.length > 0) {
-      amenitiesList = place.amenities
-        .map(a => a.name)
-        .join(", ");
-    }
-
     container.innerHTML = `
       <h1>${place.name}</h1>
-      <p><strong>Description:</strong> ${place.description}</p>
-      <p><strong>City:</strong> ${place.city}</p>
-      <p><strong>Country:</strong> ${place.country}</p>
-      <p><strong>Price per night:</strong> $${place.price_per_night}</p>
-      <p><strong>Rating:</strong> ${place.average_rating || 0}</p>
-      <p><strong>Amenities:</strong> ${amenitiesList}</p>
+      <p>${place.description}</p>
+      <p>${place.city}, ${place.country}</p>
+      <p>$${place.price_per_night}/night</p>
     `;
 
   } catch (error) {
@@ -208,46 +190,29 @@ async function fetchPlaceDetails() {
   }
 }
 
-
 /* =========================
    AUTH UI
 ========================= */
 
 function updateAuthUI() {
-  const token = getCookie("token");
-
   const loginLink = document.getElementById("login-link");
   const logoutLink = document.getElementById("logout-link");
-  const reviewSection = document.getElementById("add-review");
+  const token = getCookie("token");
 
   if (token) {
     if (loginLink) loginLink.style.display = "none";
     if (logoutLink) logoutLink.style.display = "inline";
-    if (reviewSection) reviewSection.style.display = "block";
   } else {
     if (loginLink) loginLink.style.display = "inline";
     if (logoutLink) logoutLink.style.display = "none";
-    if (reviewSection) reviewSection.style.display = "none";
   }
 }
-
 
 /* =========================
    DOM READY
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  updateAuthUI();
-
-  if (document.getElementById("places-list")) {
-    fetchPlaces();
-    setupPriceFilter();
-  }
-
-  if (document.getElementById("place-details")) {
-    fetchPlaceDetails();
-  }
 
   const loginForm = document.getElementById("login-form");
 
@@ -266,6 +231,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       loginUser(email, password);
     });
+  }
+
+  if (document.getElementById("places-list")) {
+    updateAuthUI();
+    fetchPlaces();
+    setupPriceFilter();
+  }
+
+  if (document.getElementById("place-details")) {
+    updateAuthUI();
+    fetchPlaceDetails();
   }
 
   const logoutLink = document.getElementById("logout-link");
