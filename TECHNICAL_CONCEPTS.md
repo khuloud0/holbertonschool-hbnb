@@ -170,4 +170,37 @@ Using the **Network** tab, we verified:
 - Authorization header was included  
 - JSON body contained correct `place_id`  
 - The server returned the created review object
+- 
+This helped confirm that:
+
+- The frontend was correctly sending authenticated requests. 
+- The backend was processing and validating review data properly.
+
+## 🔐 Authentication Debugging
+Using DevTools → **Application** → **Cookies**, we verified:
+- JWT token was stored correctly.
+- Token was included in API requests.
+- Unauthorized users were redirected when no token was present.
+
+## 📡 HTTP Status Code Handling
+We validated correct handling of backend responses:
+
+- 200 → Success
+- 201 → Created
+- 400 → Bad Request
+- 401 → Unauthorized
+- 403 → Forbidden
+- 404 → Not Found
+- 500 → Internal Server Error
+This improved frontend error handling and user feedback mechanisms.
+
+## 🎯 Why DevTools Were Important
+DevTools allowed us to:
+- Debug frontend–backend communication.
+- Validate JWT authentication.
+- Inspect request headers and JSON payloads.
+- Confirm proper HTTP status code handling.
+- Ensure dynamic DOM rendering worked correctly.
+
+Without DevTools, diagnosing integration issues in Part 4 would have been significantly more difficult.
 
