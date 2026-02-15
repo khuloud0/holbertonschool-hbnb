@@ -1,0 +1,102 @@
+# HBnB – Technical Concepts & Engineering Notes
+
+This document summarizes the key technical concepts learned and applied during the HBnB project at Holberton School.
+It reflects backend architecture, authentication mechanisms, API design, and frontend-backend integration.
+
+## 1. Architecture & Project Structure
+
+### Layered Architecture
+The project follows a layered architecture to separate responsibilities.
+
+Layers used:
+- API Layer (Flask Routes / Namespaces)
+- Service Layer (Facade)
+- Models
+- Database
+
+### Why it matters
+- Improves maintainability
+- Separates business logic from routes
+- Makes testing easier
+
+## 2. Authentication & Authorization
+
+### JWT (JSON Web Token)
+JWT is used for stateless authentication.
+
+Flow:
+1. User sends credentials to /auth/login
+2. Server verifies credentials
+3. Server generates JWT token
+4. Client stores token
+5. Token is sent in Authorization header
+
+Example:
+Authorization: Bearer <token>
+
+### Protected Routes
+Routes are protected using:
+@jwt_required()
+
+## 3. REST API Design
+
+The API follows REST principles.
+
+### HTTP Methods Used
+- GET → Retrieve data
+- POST → Create new resource
+- PUT → Update resource
+- DELETE → Remove resource
+
+Example:
+POST /api/v1/reviews
+GET /api/v1/places
+
+## 4. Request Lifecycle
+
+1. User interacts with frontend
+2. JavaScript sends fetch request
+3. Flask route receives request
+4. Facade processes business logic
+5. Database is queried
+6. JSON response is returned
+
+## 5. Frontend & Backend Separation
+
+Backend runs on:
+127.0.0.1:5000
+
+Frontend runs on:
+127.0.0.1:5500
+
+Why different ports?
+Because frontend and backend are separate services communicating via HTTP.
+
+## 6. Database & ORM
+
+The project uses ORM to interact with the database.
+
+Concepts learned:
+- Models
+- Relationships
+- Foreign Keys
+- CRUD operations
+
+## 7. Token Storage (Cookies)
+
+The authentication token is stored in cookies.
+
+Why?
+- Automatic inclusion in requests
+- Expiration control
+- Secure handling (SameSite policy)
+
+## 8. HTTP Status Codes
+
+- 200 → Success
+- 201 → Created
+- 400 → Bad Request
+- 401 → Unauthorized
+- 404 → Not Found
+- 500 → Internal Server Error
+
