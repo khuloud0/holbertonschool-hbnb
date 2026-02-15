@@ -120,7 +120,6 @@ Example:
 <pre>
 ```javascript
 console.log(place);
-```
 </pre>
 
 This ensured the API returned the expected structure before rendering data in the DOM.
