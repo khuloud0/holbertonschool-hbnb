@@ -160,7 +160,7 @@ fetch("http://127.0.0.1:5000/api/v1/reviews", {
     text: reviewText,
     rating: rating
   })
-});
+});```
 
 Using the ### Network tab### , we verified:
 	•	Request Method → POST
