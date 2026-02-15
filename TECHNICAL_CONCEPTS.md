@@ -100,3 +100,25 @@ Why?
 - 404 → Not Found
 - 500 → Internal Server Error
 
+# 🛠 Browser Developer Tools (DevTools)
+
+During Part 4 of the HBnB project, Browser Developer Tools played a critical role in debugging and validating frontend–backend integration.
+
+---
+
+## Console Debugging
+
+The **Console tab** was used to:
+
+- Identify JavaScript runtime errors
+- Log API responses for validation
+- Debug form submission flows
+- Detect undefined variables or incorrect data handling
+
+Example:
+
+```javascript
+console.log(place);```
+This ensured the API returned the expected structure before rendering data in the DOM.
+
+## Network Tab (API Inspection)
