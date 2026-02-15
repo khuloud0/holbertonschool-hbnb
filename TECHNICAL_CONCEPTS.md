@@ -125,6 +125,7 @@ console.log(place);
 
 This ensured the API returned the expected structure before rendering data in the DOM.
 
+
 ## 🌐 Network Tab
 
 During Part 4 of the HBnB project, the **Network tab** in Browser Developer Tools was essential for validating frontend–backend communication.
