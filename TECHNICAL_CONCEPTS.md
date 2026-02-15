@@ -124,3 +124,40 @@ console.log(place);
 </pre>
 
 This ensured the API returned the expected structure before rendering data in the DOM.
+
+## 🌐 Network Tab
+
+During Part 4 of the HBnB project, the **Network tab** in Browser Developer Tools was essential for validating frontend–backend communication.
+
+It allowed us to inspect API requests, verify authentication headers, and debug server responses in real time.
+
+---
+
+### 🔍 What We Used It For
+
+- Inspect HTTP request methods (GET, POST, PUT, DELETE)
+- Verify JSON request payloads
+- Confirm presence of JWT in the `Authorization` header
+- Check HTTP status codes
+- Analyze backend error responses
+- Debug CORS or connection issues
+
+---
+
+### 📝 Example: Submitting a Review
+
+When submitting a review, we used:
+
+```javascript
+fetch("http://127.0.0.1:5000/api/v1/reviews", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  },
+  body: JSON.stringify({
+    place_id: placeId,
+    text: reviewText,
+    rating: rating
+  })
+});```
