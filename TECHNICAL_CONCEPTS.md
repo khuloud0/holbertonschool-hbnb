@@ -117,7 +117,7 @@ The **Console tab** was used to:
 
 Example:
 
-```javascript
-console.log(place); ```
+``` javascript
+ console.log(place); ```
 
 This ensured the API returned the expected structure before rendering data in the DOM.
