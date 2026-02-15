@@ -163,10 +163,11 @@ fetch("http://127.0.0.1:5000/api/v1/reviews", {
 });
 ```
 
-Using the **Network tab** , we verified:
-	•	Request Method → POST
-	•	Status Code → 201 Created
-	•	Authorization header was included
-	•	JSON body contained correct place_id
-	•	The server returned the created review object
+Using the **Network** tab, we verified:
+
+- Request Method → POST  
+- Status Code → 201 Created  
+- Authorization header was included  
+- JSON body contained correct `place_id`  
+- The server returned the created review object
 
