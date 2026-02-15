@@ -118,7 +118,7 @@ The **Console tab** was used to:
 Example:
 
 <pre>
-```javascript
+ javascript
 console.log(place);
 </pre>
 
